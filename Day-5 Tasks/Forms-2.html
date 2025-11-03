@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forms</title>
+
+
+    <style>
+        body{
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: yellow;
+            margin: 0;
+            padding: 0;
+        }
+        h1{
+            text-align: center;
+            background: blue;
+            padding: 20px;
+            font-size: 20px;
+            letter-spacing: 2px;
+        }
+
+        form{
+            background-color: rgb(124, 236, 124);
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 30px 40px;
+            border-radius: 20px;
+        }
+
+        label{
+            font-weight: 600;
+            color: rgb(77, 30, 230);
+            display: block;
+            margin-bottom: 7px;
+        }
+        textarea{
+            width: 100%;
+            padding: 10px;
+            border: 2px solid white;
+            border-radius: 6px;
+            box-sizing: 15px;
+            font-size: 14px;
+            transition: 0.3px;
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>Forms</h1>
+
+    <form>
+        <label for="gender">Gender
+
+        </label>
+
+        <label for="male">Male</label>
+        <input type="radio" name="gender">
+
+        <label for="female">Female</label>
+        <input type="radio" name="gender"><br>
+    
+
+
+    <label for="sports">sports</label>
+
+    <label for="cricket">Cricket</label>
+    <input type="checkbox" name="sports" value="Cricket">
+
+    <label for="Kabadi">Kabadi</label>
+    <input type="checkbox" name="sports" value="Kabadi"><br>
+
+    <textarea name="" id="" rows="12" cols="60"></textarea><br>
+
+
+    <label for="Country">Country</label>
+    <select name="Country" id="">
+        <option value="">Select</option>
+        <option value="India">India</option>
+        <option value="USA">USA</option>
+        <option value="mexico">Mexico</option>
+    </select><br>
+
+
+
+    <input type="submit">
+    <input type="reset">
+    </form>
+    
+    
+</body>
+</html>

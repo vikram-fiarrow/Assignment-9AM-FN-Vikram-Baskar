@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day-5 Assignment</title>
+    <style>
+        h1{
+            text-align: center;
+            background-color: blueviolet;
+            color: azure;
+        }
+        body{
+            font-family: 'Times New Roman', Times, serif;
+            text-align: left;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Task-1 My own Student Admission Form -->
+    <h1>High-School Student Admission Form Age(14-18)</h1>
+
+    <h2>Candidate Profile Information</h2>
+
+    <form action="https://formspree.io/f/mgvpbgng" method="post">
+
+        <label for="name">Student Name:</label>
+        <input type="text" name="name" placeholder="Enter your name" required><br><br><!-- Bonus Task - 'placeholder' attribute -->
+
+
+        <label for="photo">Student Photo:</label> <!-- Task-2 File for Photo -->
+        <input type="file" name="photo" required><br><br> <!-- Bonus Task - 'required' attribute -->
+
+        <label for="DOB">Date of Birth:</label>
+        <input type="date" name="DOB" id="DOB" min="2007-01-01" max="2011-12-31"><br><br> <!-- Bonus Task - 'min-max' attribute -->
+
+        <label for="gender">Gender:</label> <!-- Task-3 Dropdown for Gender -->
+        <select name="gender" id="gender">
+            <option value="">--SELECT--</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="non-binary">Non-binary</option>
+        </select><br><br>
+
+        <label for="blood group">Blood Group:</label> <!-- Task-3 Dropdown for Blood group -->
+        <select name="blood_group" id="blood_group">
+            <option value="">--SELECT--</option>
+            <option value="A+ve">A+ve</option>
+            <option value="A-ve">A-ve</option>
+            <option value="B+ve">B+ve</option>
+            <option value="B-ve">B-ve</option>
+            <option value="O+ve">O+ve</option>
+            <option value="O-ve">O-ve</option>
+            <option value="AB-ve">AB-ve</option>
+
+        </select><br><br>
+
+        <label for="place_of_birth">Place of Birth:</label>
+        <input type="text" name="place_of_birth"><br><br>
+
+        <label for="nationality">Nationality:</label> <!-- Task-3 Dropdown for Blood group -->
+        <select name="nationality" id="nationality">
+            <option value="">--SELECT--</option>
+            <option value="IND">Indian</option>
+            <option value="SGP">Singaporean</option>
+            <option value="USA">American</option>
+            <option value="THA">Thai</option>
+            <option value="KOR">Korean</option>
+            <option value="JPN">Japanese</option>
+        </select><br><br>
+
+        <label for="language">First Language:</label>
+        <input type="text" name="language"><br><br>
+
+        <label for="religion">Religion:</label><!-- Task-5 Textbox for religion -->
+        <input type="text" name="religion"><br><br>
+
+        <label for="phone number">Phone Number:</label>
+        <input type="number" name="phone_number" min="1000000000" max="9999999999"><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" name="email"><br><br>
+
+        <h3>Residential & Family Information</h3>
+
+        <label for="address">Address:</label><br>
+        <textarea name="address" rows="5" cols="60" placeholder="Enter your full address here....."></textarea> <br><br>
+
+        <label for="Parents_Guardian_type">Parents/Guardian:</label> <!-- Task-4 Checkbox for Parent/Guardian type -->
+
+        <label for="parents">Parents</label>
+        <input type="checkbox" name="Parents_Guardian_type" value="parents">
+
+        <label for="guardian">Guardian</label>
+        <input type="checkbox" name="Parents_Guardian_type" value="guardian"><br><br>
+
+        <label for="father_name">Father's Name:</label>
+        <input type="text" name="father_name" placeholder="Enter your Father's name" required><br><br> <!-- Bonus Task - 'placeholder' attribute -->
+
+        <label for="father_occupation">Father's Occupation:</label><!-- Task-5 Textbox for occupation -->
+        <input type="text" name="father_occupation"><br><br>
+
+        <label for="mother_name">Mother's Name:</label>
+        <input type="text" name="mother_name" placeholder="Enter your Mother's name" required><br><br>
+
+        <label for="mother_occupation">Mother's Occupation:</label>
+        <input type="text" name="mother_occupation"><br><br>
+
+        <label for="extra curricular">Extra-Curricular Activities:</label><!-- Task-5 Textbox for religion -->
+        <input type="text" name="extra_curricular"><br><br>
+
+        <label for="TC">Transfer Certificate:</label> <!-- Task-2 File for Photo -->
+        <input type="file" name="TC" required><br><br>
+
+        <input type="submit">
+        <input type="reset">
+
+
+    </form>
+</body>
+</html>
