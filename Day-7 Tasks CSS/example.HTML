@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Company Header Example</title>
+
+  <style>
+    /* Reset default margins */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Header container */
+    header {
+      display: flex;               /* keeps all in one line */
+      align-items: center;         /* vertically center items */
+      justify-content: space-between; /* space between logo/name and nav */
+      background-color: #f5f5f5;
+      padding: 10px 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    /* Left side (logo + company name) */
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 10px; /* space between logo and name */
+    }
+
+    .logo-section img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+
+    .logo-section h1 {
+      font-size: 20px;
+      color: #333;
+      margin: 0;
+    }
+
+    /* Navigation links */
+    nav a {
+      text-decoration: none;
+      color: #333;
+      margin-left: 20px;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: #007bff; /* hover color */
+    }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <!-- Logo + Name -->
+    <div class="logo-section">
+      <img src="logo.png" alt="Company Logo">
+      <h1>My Company</h1>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Services</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+</body>
+</html>
