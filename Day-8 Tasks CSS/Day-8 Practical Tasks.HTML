@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 9 - Landing Page Practice</title>
+
+    <style>
+        /* Reset and Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Task 2: Fixed Navigation Bar */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            z-index: 1000;
+        }
+
+        nav h1 {
+            font-size: 1.5em;
+            letter-spacing: 2px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ffd700;
+        }
+
+        /* Task 1: Hero Section with Background Image and Overlay */
+        .hero {
+            background-image: url("https://images.unsplash.com/photo-1526772662000-3f88f10405ff");
+            background-size: cover;
+            background-position: center;
+            height: 90vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            margin-top: 60px;
+            /* Space for fixed navbar */
+        }
+
+        /* Dark overlay */
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .hero-text {
+            position: relative;
+            color: white;
+            text-align: center;
+            z-index: 1;
+        }
+
+        .hero-text h2 {
+            font-size: 3em;
+            letter-spacing: 3px;
+        }
+
+        .hero-text p {
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+
+        /* Task 5: Sticky Header */
+        header {
+            position: sticky;
+            top: 0;
+            background-color: wheat;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            border-bottom: 2px solid white;
+            z-index: 999;
+        }
+
+        /* Task 4: About Section with letter-spacing and readable fonts */
+        .about {
+            padding: 60px 40px;
+            background-color: whitesmoke;
+            letter-spacing: 1px;
+            font-size: 1.1em;
+        }
+
+        .about h2 {
+            color: grey;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Task 3: Floating Contact Us Button */
+        .contact-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background-color: lightblue;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1em;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: background 0.3s;
+        }
+
+        .contact-btn:hover {
+            background-color: navy;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Task 2: Fixed Navigation Bar -->
+    <nav>
+        <h1>MyLanding</h1>
+        <ul>
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#">Services</a></li>
+        </ul>
+    </nav>
+
+    <!-- Task 1: Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-text">
+            <h2>Welcome to My Page</h2>
+            <p>Learn to live, survive and prevail</p>
+        </div>
+    </section>
+
+    <!-- Task 5: Sticky Header -->
+    <header>Scroll Down to See Sticky Header</header>
+
+    <!-- Task 4: About Section -->
+    <section class="about" id="about">
+        <h2>About This Page</h2>
+        <p>
+            Survival is the act of continuing to live or exist despite adversity, hardship, or life-threatening
+            circumstances. It is a primal instinct that pushes individuals to their physical and mental limits,
+            demanding resilience, adaptability, and the will to live
+        </p>
+    </section>
+
+    <!-- Task 3: Floating Contact Button -->
+    <button class="contact-btn">Contact Us</button>
+
+</body>
+
+</html>
