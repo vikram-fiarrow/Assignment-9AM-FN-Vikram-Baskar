@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 11 - Practical Grid Tasks</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        background: #f5f5f5;
+    }
+
+    h2 {
+        margin-top: 40px;
+        border-bottom: 2px solid #ccc;
+        padding-bottom: 5px;
+    }
+
+    /* ---------------------- TASK 1: Basic Layout ---------------------- */
+    .basic-layout {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        grid-template-rows: 70px 300px 60px;
+        grid-template-areas:
+            "header header"
+            "sidebar content"
+            "footer footer";
+        gap: 10px;
+        margin-top: 15px;
+    }
+    .header   { grid-area: header;  background: lightblue;   text-align: center; padding: 20px; }
+    .sidebar  { grid-area: sidebar; background: lightgreen;  padding: 20px; }
+    .content  { grid-area: content; background: #ffe6a7;     padding: 20px; }
+    .footer   { grid-area: footer;  background: lightgray;   text-align: center; padding: 15px; }
+
+    /* ---------------------- TASK 2: Photo Gallery ---------------------- */
+    .gallery {
+        margin-top: 15px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 10px;
+    }
+    .gallery img {
+        width: 100%;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+
+    /* ---------------------- TASK 3: Dashboard Layout ---------------------- */
+    .dashboard {
+        margin-top: 15px;
+        display: grid;
+        grid-template-areas:
+            "nav nav nav"
+            "stats stats charts"
+            "footer footer footer";
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 60px 200px 60px;
+        gap: 10px;
+    }
+    .dash-nav    { grid-area: nav;    background: #add8e6; padding: 20px; }
+    .dash-stats  { grid-area: stats;  background: #c5f6c7; padding: 20px; }
+    .dash-charts { grid-area: charts; background: #ffd6a5; padding: 20px; }
+    .dash-footer { grid-area: footer; background: #e0e0e0; padding: 20px; }
+
+    /* ---------------------- TASK 4: Flexbox → Grid Comparison ---------------------- */
+    .flex-layout, .grid-layout {
+        margin-top: 15px;
+        gap: 10px;
+    }
+
+    /* Flexbox layout */
+    .flex-layout {
+        display: flex;
+    }
+    .flex-layout div {
+        background: #d0e8ff;
+        padding: 20px;
+        flex: 1;
+        text-align: center;
+    }
+
+    /* Grid version */
+    .grid-layout {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .grid-layout div {
+        background: #ffdada;
+        padding: 20px;
+        text-align: center;
+    }
+
+    /* ---------------------- TASK 5: Blog Homepage Layout ---------------------- */
+    .blog-layout {
+        margin-top: 15px;
+        display: grid;
+        grid-template-areas:
+            "header header"
+            "posts sidebar"
+            "footer footer";
+        grid-template-columns: 2fr 1fr;
+        grid-template-rows: 70px auto 60px;
+        gap: 10px;
+    }
+    .blog-header  { grid-area: header;  background: lightblue;  padding: 20px; text-align: center; }
+    .blog-posts   { grid-area: posts;   background: #fff3cd;    padding: 20px; }
+    .blog-sidebar { grid-area: sidebar; background: #c8ffd7;    padding: 20px; }
+    .blog-footer  { grid-area: footer;  background: #e0e0e0;    padding: 15px; text-align: center; }
+
+</style>
+</head>
+<body>
+
+<h1>Day 11 - Practical Grid Tasks</h1>
+
+<!-- ---------------------- TASK 1 ---------------------- -->
+<h2>Task 1: Basic Website Layout Using Grid</h2>
+<div class="basic-layout">
+    <div class="header">Header</div>
+    <div class="sidebar">Sidebar</div>
+    <div class="content">Main Content</div>
+    <div class="footer">Footer</div>
+</div>
+
+<!-- ---------------------- TASK 2 ---------------------- -->
+<h2>Task 2: Photo Gallery (auto-fit & minmax)</h2>
+<div class="gallery">
+    <img src="./1gym.jpeg">
+    <img src="./gym.jpeg">
+    <img src="./meal.jpeg">
+    <img src="./PT.jpeg">
+    <img src="./sauna.jpeg">
+    
+</div>
+
+<!-- ---------------------- TASK 3 ---------------------- -->
+<h2>Task 3: Dashboard Layout with Named Areas</h2>
+<div class="dashboard">
+    <div class="dash-nav">Navigation</div>
+    <div class="dash-stats">Statistics Panel</div>
+    <div class="dash-charts">Charts</div>
+    <div class="dash-footer">Dashboard Footer</div>
+</div>
+
+<!-- ---------------------- TASK 4 ---------------------- -->
+<h2>Task 4: Convert Flexbox Layout into Grid</h2>
+
+<p><strong>Flexbox Layout:</strong></p>
+<div class="flex-layout">
+    <div>Box 1</div>
+    <div>Box 2</div>
+    <div>Box 3</div>
+</div>
+
+<p><strong>Grid Layout:</strong></p>
+<div class="grid-layout">
+    <div>Box 1</div>
+    <div>Box 2</div>
+    <div>Box 3</div>
+</div>
+
+<!-- ---------------------- TASK 5 ---------------------- -->
+<h2>Task 5: Blog Homepage Using Grid Areas</h2>
+<div class="blog-layout">
+    <div class="blog-header">Blog Header</div>
+    <div class="blog-posts">Blog Posts Section</div>
+    <div class="blog-sidebar">Sidebar</div>
+    <div class="blog-footer">Footer</div>
+</div>
+
+</body>
+</html>

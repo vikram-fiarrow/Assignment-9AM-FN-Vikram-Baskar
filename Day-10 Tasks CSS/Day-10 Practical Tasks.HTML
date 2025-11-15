@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 10 Practical Tasks</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f3f3f3;
+        margin: 0;
+        padding: 0;
+    }
+
+    h2 {
+        background: #333;
+        color: white;
+        padding: 10px;
+    }
+
+    /* ------------------ TASK 1: FLEXBOX LAYOUT ------------------ */
+    .flex-layout {
+        display: flex;
+        gap: 10px;
+        padding: 20px;
+    }
+    .flex-box {
+        background: lightblue;
+        padding: 20px;
+        flex: 1;
+        text-align: center;
+    }
+
+    /* ------------------ TASK 2: RESPONSIVE NAVBAR ------------------ */
+    nav {
+        background: #222;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 15px;
+        align-items: center;
+    }
+
+    nav a:hover{
+        color: blue;
+    }
+    
+    nav ul {
+        list-style: none;
+        display: flex;
+        gap: 15px;
+        margin: 0;
+    }
+    nav ul li {
+        display: inline;
+    }
+    nav ul li a {
+        color: white;
+        text-decoration: none;
+    }
+
+    /* responsive */
+    @media (max-width: 600px) {
+        nav ul {
+            flex-direction: column;
+        }
+    }
+
+    /* ------------------ TASK 3: DASHBOARD GRID ------------------ */
+    .dashboard {
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr;
+        gap: 10px;
+        padding: 20px;
+    }
+    .dash-box {
+        background: #ffe5b4;
+        padding: 20px;
+        text-align: center;
+    }
+
+    /* ------------------ TASK 4: FLEX + GRID MIXED ------------------ */
+    .mixed-section {
+        padding: 20px;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 10px;
+    }
+    .mixed-left {
+        background: #c7ffd8;
+        padding: 20px;
+    }
+    .mixed-right {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .mixed-right div {
+        background: #d8e8ff;
+        padding: 20px;
+    }
+
+    /* ------------------ TASK 5: PORTFOLIO GRID TEMPLATE AREAS ------------------ */
+    .portfolio {
+        display: grid;
+        padding: 20px;
+        gap: 10px;
+        grid-template-areas:
+            "header header"
+            "sidebar main"
+            "footer footer";
+        grid-template-columns: 1fr 2fr;
+    }
+    .p-header { grid-area: header; background: #ffcccc; padding: 20px; }
+    .p-sidebar { grid-area: sidebar; background: #ccffcc; padding: 20px; }
+    .p-main { grid-area: main; background: #ccccff; padding: 20px; }
+    .p-footer { grid-area: footer; background: #ffeecc; padding: 20px; }
+
+</style>
+</head>
+<body>
+
+<h2>Task 1: Redesign Layout Using Flexbox</h2>
+<div class="flex-layout">
+    <div class="flex-box">Box 1</div>
+    <div class="flex-box">Box 2</div>
+    <div class="flex-box">Box 3</div>
+</div>
+
+<h2>Task 2: Responsive Navbar</h2>
+<nav>
+    <div class="logo">MySite</div>
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+    </ul>
+</nav>
+
+<h2>Task 3: Dashboard Using Grid</h2>
+<div class="dashboard">
+    <div class="dash-box">Menu</div>
+    <div class="dash-box">Analytics</div>
+    <div class="dash-box">Settings</div>
+</div>
+
+<h2>Task 4: Grid + Flexbox Mixed Section</h2>
+<div class="mixed-section">
+    <div class="mixed-left">Left Side Content</div>
+    <div class="mixed-right">
+        <div>Item 1</div>
+        <div>Item 2</div>
+    </div>
+</div>
+
+<h2>Task 5: Portfolio Page Using Grid Template Areas</h2>
+<div class="portfolio">
+    <div class="p-header">Portfolio Header</div>
+    <div class="p-sidebar">Sidebar</div>
+    <div class="p-main">Main Content (Projects)</div>
+    <div class="p-footer">Footer</div>
+</div>
+
+</body>
+</html>

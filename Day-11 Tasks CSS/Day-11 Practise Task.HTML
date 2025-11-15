@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 11 - Grid Practice Tasks</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        background: #f7f7f7;
+    }
+
+    h2 {
+        margin-top: 40px;
+        border-bottom: 2px solid #ddd;
+        padding-bottom: 5px;
+    }
+
+    /* ---------------- TASK 1: 3x2 GRID ---------------- */
+    .grid-3x2 {
+        display: grid;
+        grid-template-columns: 100px 100px 100px;
+        grid-template-rows: 100px 100px;
+        gap: 10px;
+        margin-top: 15px;
+    }
+    .grid-3x2 div {
+        background: lightblue;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #333;
+    }
+
+    /* ---------------- TASK 2: 4 equal columns with fr ---------------- */
+    .grid-4fr {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr; /* 4 equal columns */
+        gap: 10px;
+        margin-top: 15px;
+    }
+    .grid-4fr div {
+        background: lightgreen;
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid green;
+    }
+
+    /* ---------------- TASK 3: Add gap ---------------- */
+    .grid-gap {
+        display: grid;
+        grid-template-columns: repeat(3, 100px);
+        gap: 20px; /* gap between items */
+        margin-top: 15px;
+    }
+    .grid-gap div {
+        background: pink;
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #c03;
+    }
+
+    /* ---------------- TASK 4: Named Areas ---------------- */
+    .layout {
+        display: grid;
+        grid-template-areas:
+            "header"
+            "main"
+            "footer";
+        grid-template-rows: 80px 150px 60px;
+        gap: 10px;
+        margin-top: 15px;
+    }
+    .header {
+        grid-area: header;
+        background: #add8e6;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .main {
+        grid-area: main;
+        background: #d0ffd0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .footer {
+        grid-area: footer;
+        background: #ffd7a0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* ---------------- TASK 5: repeat() ---------------- */
+    .repeat-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); /* 4 equal columns */
+        grid-template-rows: repeat(2, 80px);  /* 2 equal rows */
+        gap: 10px;
+        margin-top: 15px;
+    }
+    .repeat-grid div {
+        background: #c7c7ff;
+        border: 1px solid #555;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+</head>
+<body>
+
+<h1>Day 11 - Grid Practice Tasks</h1>
+
+<!-- TASK 1 -->
+<h2>Task 1: Create a 3x2 Grid</h2>
+<div class="grid-3x2">
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+    <div>5</div>
+    <div>6</div>
+</div>
+
+<!-- TASK 2 -->
+<h2>Task 2: 4 Equal Columns Using fr</h2>
+<div class="grid-4fr">
+    <div>A</div>
+    <div>B</div>
+    <div>C</div>
+    <div>D</div>
+</div>
+
+<!-- TASK 3 -->
+<h2>Task 3: Grid With Gap</h2>
+<div class="grid-gap">
+    <div>Box 1</div>
+    <div>Box 2</div>
+    <div>Box 3</div>
+</div>
+
+<!-- TASK 4 -->
+<h2>Task 4: Named Grid Areas</h2>
+<div class="layout">
+    <div class="header">Header</div>
+    <div class="main">Main Content</div>
+    <div class="footer">Footer</div>
+</div>
+
+<!-- TASK 5 -->
+<h2>Task 5: Using repeat() for Grid</h2>
+<div class="repeat-grid">
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+    <div>5</div>
+    <div>6</div>
+    <div>7</div>
+    <div>8</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid Layout</title>
+
+
+    <style>
+        /* .container{
+            display: grid;
+            background: #303030;
+            color: white;
+            grid-gap: 10px;
+            grid-template-columns: 1fr 3fr 300px;
+            grid-template-rows: 100px 300px;
+            grid-template-rows: 100px;
+        }
+
+        .container div{
+            background-color: navy;
+            padding: 20px;
+            text-align: center;
+        } */
+
+        /* .container :hover{
+            background-color: red;
+        } */
+
+
+        .layout{
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            grid-template-rows: auto 1fr auto;
+            grid-template-areas: 
+            "header header"
+            "sidebar main"
+            "footer footer"
+            ;
+        }
+
+        .header{
+            background-color: lightgreen;
+            grid-area: header;
+        }
+
+        .sidebar{
+            background-color: yellow;
+            grid-area: sidebar;
+        }
+
+        .main{
+            background-color: aqua;
+            grid-area: main;
+        }
+
+        .footer{
+            background-color: navy;
+            grid-area: footer;
+        }
+
+        li{
+            display: inline-block;
+            background: grey;
+            padding: 16px;
+        }
+
+        .flo{
+            float: right;
+        }
+
+        button{
+            display: block;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- <div class="container">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+        <div>5</div>
+    </div> -->
+
+    <div class="layout">
+        <div class="header">Header
+        <nav>
+            <ul>
+                <li>Home</li>
+                <li>About</li>
+                <li>Contact</li>
+                <li class="flo">Settings</li>
+            </ul>
+        </nav>
+        </div>
+
+        <div class="sidebar">Side Bar
+        <button>a</button>
+        <button>b</button>
+        <button>c</button>
+        <button>d</button>
+        <button>e</button>
+        </div>
+
+        <div class="main">Main
+
+            <section>
+                <article>
+                    
+                </article>
+            </section>
+        </div>
+
+        <div class="footer">Footer</div>
+    </div>
+
+
+</body>
+</html>
