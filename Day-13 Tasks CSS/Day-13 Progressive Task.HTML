@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PawPulse Website - Animated Version</title>
+
+  <style>
+    /* ---------- Loader Animation ---------- */
+    #loader {
+      width: 50px;
+      height: 50px;
+      border: 6px solid #ddd;
+      border-top-color: #ff6600;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 40px auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* ---------- Layout ---------- */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #fafafa;
+      animation: fadeIn 1.2s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    header {
+      background: #ff6600;
+      padding: 20px;
+      color: white;
+      text-align: center;
+      animation: drop 1s ease;
+    }
+
+    @keyframes drop {
+      0% { opacity: 0; transform: translateY(-30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    nav {
+      background: #333;
+      display: flex;
+      justify-content: center;
+      padding: 10px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      background: #ff6600;
+      border-radius: 5px;
+      transform: scale(1.1);
+    }
+
+    main {
+      display: flex;
+      padding: 20px;
+      gap: 20px;
+    }
+
+    section, aside {
+      padding: 20px;
+      background: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      transition: 0.4s ease;
+    }
+
+    /* Section hover animation */
+    section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    /* Aside card hover */
+    aside:hover {
+      transform: translateY(-5px) scale(1.02);
+    }
+
+    aside ul li a {
+      text-decoration: none;
+      color: #ff6600;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    aside ul li a:hover {
+      color: #333;
+      text-shadow: 0 0 5px orange;
+    }
+
+    footer {
+      background: #333;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Loader (Optional For Assignment) -->
+
+
+  <header>
+    <h1>PawPulse Website</h1>
+  </header>
+
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Products</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </nav>
+
+  <main>
+    <section>
+        <div id="loader"></div>
+      <h2>Welcome to PawPulse</h2>
+      <p>Your friendly neighborhood pet store, offering premium products and care services for all pets.</p>
+    </section>
+
+    <aside>
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a href="#">Pet Care Tips</a></li>
+        <li><a href="#">Adoption Info</a></li>
+        <li><a href="#">Vet Appointments</a></li>
+      </ul>
+    </aside>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 PawPulse. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

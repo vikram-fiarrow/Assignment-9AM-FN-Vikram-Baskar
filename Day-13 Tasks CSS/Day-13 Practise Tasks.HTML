@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 13 Practice</title>
+
+<style>
+    body{
+        font-family: Arial, sans-serif;
+        background: #f2f2f2;
+        padding: 30px;
+    }
+
+    /* 1️⃣ Box with smooth color change */
+    .color-box{
+        width: 150px;
+        height: 150px;
+        background: lightblue;
+        transition: background 1s ease;
+        margin-bottom: 40px;
+    }
+    .color-box:hover{
+        background: orange;
+    }
+
+    /* 2️⃣ Text moving left to right */
+    @keyframes slide {
+        0%{ transform: translateX(0); }
+        100%{ transform: translateX(200px); }
+    }
+    .moving-text{
+        font-size: 22px;
+        animation: slide 3s linear infinite;
+        margin-bottom: 40px;
+    }
+
+    /* 3️⃣ Image grows on hover using scale() */
+    .grow-img{
+        width: 200px;
+        transition: transform 0.5s ease;
+        margin-bottom: 40px;
+    }
+    .grow-img:hover{
+        transform: scale(1.2);
+    }
+
+    /* 4️⃣ Rotating square */
+    .rotate-box{
+        width: 100px;
+        height: 100px;
+        background: purple;
+        animation: spin 3s linear infinite;
+        margin-bottom: 40px;
+    }
+
+    @keyframes spin {
+        0%{ transform: rotate(0deg); }
+        100%{ transform: rotate(360deg); }
+    }
+
+    /* 5️⃣ Button with smooth hover + focus */
+    .cool-btn{
+        padding: 12px 25px;
+        background: black;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 16px;
+    }
+    .cool-btn:hover{
+        background: rgb(50, 50, 50);
+        transform: scale(1.1);
+    }
+    .cool-btn:focus{
+        outline: 3px solid orange;
+        transform: scale(1.12);
+    }
+</style>
+</head>
+<body>
+
+<h2>Day 13 - CSS Practice</h2>
+
+<h3>Color Light blue to Orange</h3>
+<div class="color-box"></div>
+
+<h3> Moving Text</h3>
+<div class="moving-text">Let's go here -></div>
+
+<h3>Grower</h3>
+<img class="grow-img" src="./1gym.jpeg" alt="Sample">
+
+<h3>Hey</h3>
+<div class="rotate-box"></div>
+
+<h3>Button</h3>
+<button class="cool-btn">Click Me</button>
+
+</body>
+</html>
