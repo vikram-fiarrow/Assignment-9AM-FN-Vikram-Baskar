@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Catch the Ball Game</title>
+
+<style>
+    body{
+        margin:0;
+        padding:0;
+        height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        background:#111;
+        color:white;
+        font-family:Arial, Helvetica, sans-serif;
+        overflow:hidden;
+    }
+
+    #ball{
+        width:70px;
+        height:70px;
+        background:radial-gradient(circle, #ffdd00, #ff6a00);
+        border-radius:50%;
+        position:absolute;
+        cursor:pointer;
+        box-shadow:0 0 20px #ffae00;
+        transition:0.2s;
+    }
+
+    #panel{
+        position:fixed;
+        top:20px;
+        left:20px;
+        font-size:22px;
+        background:#222;
+        padding:15px 20px;
+        border-radius:10px;
+        box-shadow:0 0 10px #555;
+    }
+
+    #startBtn{
+        position:fixed;
+        bottom:20px;
+        left:50%;
+        transform:translateX(-50%);
+        padding:12px 25px;
+        background:#00d9ff;
+        color:black;
+        font-size:20px;
+        border:none;
+        border-radius:10px;
+        cursor:pointer;
+        transition:0.3s;
+    }
+    #startBtn:hover{
+        background:#009fc7;
+    }
+</style>
+</head>
+
+<body>
+
+<div id="panel">
+    Score: <span id="score">0</span> <br>
+    Time: <span id="time">30</span>s
+</div>
+
+<div id="ball"></div>
+
+<button id="startBtn">Start Game</button>
+
+<script>
+    const ball = document.getElementById("ball");
+    const scoreDisplay = document.getElementById("score");
+    const timeDisplay = document.getElementById("time");
+    const startBtn = document.getElementById("startBtn");
+
+    let score = 0;
+    let timeLeft = 30;
+    let timer;
+    let gameRunning = false;
+
+    function randomPosition(){
+        let x = Math.random() * (window.innerWidth - 70);
+        let y = Math.random() * (window.innerHeight - 70);
+        ball.style.left = x + "px";
+        ball.style.top = y + "px";
+    }
+
+    ball.addEventListener("click", () => {
+        if(!gameRunning) return;
+        score++;
+        scoreDisplay.textContent = score;
+
+        ball.style.transform = "scale(1.2)";
+        setTimeout(()=> ball.style.transform = "scale(1)", 100);
+
+        randomPosition();
+    });
+
+    startBtn.addEventListener("click", () => {
+        score = 0;
+        timeLeft = 30;
+        scoreDisplay.textContent = score;
+        timeDisplay.textContent = timeLeft;
+        gameRunning = true;
+        startBtn.style.display = "none";
+
+        randomPosition();
+
+        timer = setInterval(()=>{
+            timeLeft--;
+            timeDisplay.textContent = timeLeft;
+
+            if(timeLeft <= 0){
+                clearInterval(timer);
+                gameRunning = false;
+                alert("Game Over! Your score: " + score);
+                startBtn.style.display = "block";
+            }
+        }, 1000);
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moxy Hotel – Youthful Landing Page</title>
+
+    <!-- BOOTSTRAP CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+
+    <!-- TAILWIND CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        body{ font-family: Poppins, sans-serif; }
+        .moxy-color{ color:#ff2e93; }
+        .moxy-bg{ background:#ff2e93; }
+    </style>
+</head>
+
+<body>
+
+<!-- ============================= -->
+<!-- 1️⃣ BOOTSTRAP NAVBAR (RESPONSIVE) -->
+<!-- ============================= -->
+<nav class="navbar navbar-expand-lg navbar-dark" style="background:#111;">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="#" style="color:#ff2e93;">MOXY HOTEL</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+                data-bs-target="#navMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navMenu">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link text-white" href="#features">Features</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="#cards">Rooms</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="#pricing">Pricing</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- ============================= -->
+<!-- 2️⃣ HERO SECTION (BOOTSTRAP GRID) -->
+<!-- ============================= -->
+<section class="container mt-5">
+    <div class="row align-items-center">
+        
+        <div class="col-md-6">
+            <h1 class="fw-bold display-5" style="color:#ff2e93;">Stay Play Slay</h1>
+            <p class="mt-3 lead">
+                Welcome to the bold and playful world of Moxy!  
+                Perfect for travelers who love fun vibes, stylish comfort,
+                and unforgettable hospitality.
+            </p>
+            <button class="btn btn-dark px-4 py-2 mt-3" style="background:#ff2e93;border:none;">
+                Book Now
+            </button>
+        </div>
+
+        <div class="col-md-6">
+            <img src="./moxy.jpg"
+                 class="img-fluid rounded shadow"
+                 alt="Hotel Image">
+        </div>
+
+    </div>
+</section>
+
+<hr class="my-5">
+
+<!-- ============================= -->
+<!-- 3️⃣ TAILWIND FEATURES SECTION -->
+<!-- ============================= -->
+<section id="features" class="py-10 bg-gray-100">
+    <h2 class="text-center text-3xl font-extrabold moxy-color mb-10">
+        Why You'll Love Staying With Us
+    </h2>
+
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 px-4">
+
+        <div class="bg-white p-6 rounded-xl shadow hover:scale-105 transition">
+            <h3 class="font-bold text-lg moxy-color mb-2">24/7 Fun Lounge</h3>
+            <p class="text-gray-700">
+                Chill, play games, or sip cocktails anytime you want.
+            </p>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow hover:scale-105 transition">
+            <h3 class="font-bold text-lg moxy-color mb-2">Super Cozy Rooms</h3>
+            <p class="text-gray-700">
+                Soft beds, perfect lighting, and aesthetic vibes everywhere.
+            </p>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow hover:scale-105 transition">
+            <h3 class="font-bold text-lg moxy-color mb-2">Fast Wi-Fi</h3>
+            <p class="text-gray-700">
+                Upload your entire holiday in seconds!
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<hr class="my-5">
+
+<!-- ============================= -->
+<!-- 4️⃣ 3 CARD LAYOUT (BOOTSTRAP) -->
+<!-- ============================= -->
+<section id="cards" class="container">
+    <h2 class="text-center fw-bold mb-4" style="color:#ff2e93;">Our Room Options</h2>
+
+    <div class="row text-center">
+
+        <div class="col-md-4 mb-3">
+            <div class="card shadow border-0">
+                <img src="https://images.unsplash.com/photo-1655450075012-c0393e3cc1ce?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                     class="card-img-top" alt="">
+                <div class="card-body">
+                    <h5 class="fw-bold">Cozy Solo</h5>
+                    <p>Perfect for budget travelers.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card shadow border-0">
+                <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427" 
+                     class="card-img-top" alt="">
+                <div class="card-body">
+                    <h5 class="fw-bold">Couple's Den</h5>
+                    <p>Warm, stylish, and romantic.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card shadow border-0">
+                <img src="https://images.unsplash.com/photo-1759223198981-661cadbbff36?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                     class="card-img-top" alt="">
+                <div class="card-body">
+                    <h5 class="fw-bold">Family Suite</h5>
+                    <p>Spacious & fully equipped.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<hr class="my-5">
+
+<!-- ============================= -->
+<!-- 5️⃣ PRICING TABLE (BOOTSTRAP) -->
+<!-- ============================= -->
+<section id="pricing" class="container mb-5">
+    <h2 class="text-center fw-bold mb-4" style="color:#ff2e93;">Pricing Plans</h2>
+
+    <div class="row text-center">
+
+        <div class="col-md-4 mb-3">
+            <div class="p-4 border rounded shadow">
+                <h3 class="fw-bold">Basic</h3>
+                <h1 class="moxy-color fw-bold">$49</h1>
+                <p>1 Night • Free WiFi</p>
+                <button class="btn btn-dark w-100" style="background:#ff2e93;border:none;">Choose</button>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="p-4 border rounded shadow">
+                <h3 class="fw-bold">Standard</h3>
+                <h1 class="moxy-color fw-bold">$79</h1>
+                <p>2 Nights • Breakfast Included</p>
+                <button class="btn btn-dark w-100" style="background:#ff2e93;border:none;">Choose</button>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="p-4 border rounded shadow">
+                <h3 class="fw-bold">Premium</h3>
+                <h1 class="moxy-color fw-bold">$119</h1>
+                <p>3 Nights • Lounge Access</p>
+                <button class="btn btn-dark w-100" style="background:#ff2e93;border:none;">Choose</button>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- BOOTSTRAP JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

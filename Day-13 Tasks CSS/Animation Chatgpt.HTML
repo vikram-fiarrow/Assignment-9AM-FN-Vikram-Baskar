@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>India Animation Showcase</title>
+
+<style>
+    body {
+        background: #fafafa;
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+    }
+
+    /* Falling balls */
+    .ball {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        position: absolute;
+        top: -50px;
+        animation: fall 2s ease-in forwards;
+    }
+
+    @keyframes fall {
+        to { transform: translateY(90vh); }
+    }
+
+    /* Burst particles */
+    .burst {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        position: absolute;
+        opacity: 0;
+        animation: burstMove 1s ease-out forwards;
+    }
+
+    @keyframes burstMove {
+        from { opacity: 1; transform: scale(1); }
+        to {
+            opacity: 0;
+            transform: translate(
+                calc(-50px + 100px * var(--dx)),
+                calc(-50px + 100px * var(--dy))
+            ) scale(0.3);
+        }
+    }
+
+    /* Reveal text */
+    .title {
+        position: absolute;
+        top: 30%;
+        width: 100%;
+        text-align: center;
+        font-size: 35px;
+        font-weight: bold;
+        opacity: 0;
+        animation: fadeIn 2s forwards;
+        animation-delay: 3s;
+    }
+
+    @keyframes fadeIn {
+        to { opacity: 1; }
+    }
+
+    .facts {
+        position: absolute;
+        top: 45%;
+        width: 100%;
+        opacity: 0;
+        animation: slideUp 2s forwards;
+        animation-delay: 4s;
+        text-align: center;
+        font-size: 20px;
+        color: #444;
+        line-height: 35px;
+    }
+
+    @keyframes slideUp {
+        from { opacity: 0; transform: translateY(40px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+</head>
+
+<body>
+
+<h1 class="title">India — A Land of Culture, Diversity & Innovation</h1>
+
+<div class="facts">
+    🇮🇳 India is the world’s largest democracy.<br>
+    🌶️ Home to over 2,000 unique cultures & traditions.<br>
+    🚀 ISRO made world history with the Chandrayaan Mission.
+</div>
+
+<script>
+    // Create 15 falling balls
+    for (let i = 0; i < 15; i++) {
+        let ball = document.createElement("div");
+        ball.className = "ball";
+        ball.style.left = Math.random() * 90 + "vw";
+        ball.style.background = `hsl(${Math.random()*360}, 70%, 60%)`;
+        ball.style.animationDelay = (Math.random() * 0.5) + "s";
+        document.body.appendChild(ball);
+
+        // Burst effect when animation ends
+        ball.addEventListener("animationend", () => {
+            for (let j = 0; j < 20; j++) {
+                let p = document.createElement("div");
+                p.className = "burst";
+                p.style.background = ball.style.background;
+                p.style.left = ball.style.left;
+                p.style.top = "90vh";
+
+                // random direction
+                p.style.setProperty("--dx", Math.random() * 2 - 1);
+                p.style.setProperty("--dy", Math.random() * 2 - 1);
+
+                document.body.appendChild(p);
+
+                setTimeout(() => p.remove(), 1200);
+            }
+            ball.remove();
+        });
+    }
+</script>
+
+</body>
+</html>

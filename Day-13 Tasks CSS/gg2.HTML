@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Stickman Runner</title>
+<style>
+  :root{
+    --bg:#0f1724;
+    --ground:#1f2937;
+    --accent:#f59e0b;
+    --muted:#9ca3af;
+  }
+  html,body{
+    height:100%;
+    margin:0;
+    font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial;
+    background: radial-gradient(1200px 600px at 10% 10%, #071029 0%, var(--bg) 25%, #07111a 60%);
+    color:#e6eef8;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .wrap{
+    width:960px;
+    max-width:96vw;
+    aspect-ratio:16/9;
+    display:grid;
+    grid-template-rows:1fr auto;
+    gap:8px;
+    padding:12px;
+    box-sizing:border-box;
+  }
+  canvas{
+    width:100%;
+    height:100%;
+    border-radius:12px;
+    box-shadow: 0 8px 30px rgba(2,6,23,0.7), inset 0 1px 0 rgba(255,255,255,0.02);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.03));
+    display:block;
+  }
+  .hud{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+  }
+  .panel{
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    padding:8px 12px;
+    border-radius:8px;
+    color:var(--muted);
+    font-weight:600;
+    font-size:14px;
+  }
+  .panel strong{ color:var(--accent); font-weight:800; margin-right:6px;}
+  .hint{ color: #aab6c6; font-size:13px; padding:6px 10px; border-radius:8px;}
+  .footer{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-top:6px;
+  }
+  .controls{ color: #bcd1e8; font-size:13px;}
+  .btn{
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.06);
+    color: #dbe9ff;
+    padding:6px 10px;
+    border-radius:8px;
+    cursor:pointer;
+  }
+  .small{ font-size:12px; color:#9fb0c8; }
+  @media (max-width:600px){
+    .wrap{ max-width:98vw; aspect-ratio: 3/4; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <canvas id="game"></canvas>
+    <div>
+      <div class="hud">
+        <div class="panel">Score: <strong id="score">0</strong></div>
+        <div class="panel">Top: <strong id="high">0</strong></div>
+        <div class="hint">Space / ↑ or Click to jump • Press R to restart after game over</div>
+      </div>
+      <div class="footer">
+        <div class="controls small">Stickman Runner — obstacle dodger</div>
+        <div>
+          <button class="btn" id="pauseBtn">Pause</button>
+          <button class="btn" id="resetBtn">Reset High Score</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+(() => {
+  const canvas = document.getElementById('game');
+  const ctx = canvas.getContext('2d');
+
+  // Logical resolution (kept fixed for consistent physics)
+  const W = 1200, H = 675;
+  canvas.width = W;
+  canvas.height = H;
+
+  // DOM elements
+  const scoreEl = document.getElementById('score');
+  const highEl = document.getElementById('high');
+  const pauseBtn = document.getElementById('pauseBtn');
+  const resetBtn = document.getElementById('resetBtn');
+
+  // Game state
+  let lastTime = 0;
+  let running = true;
+  let gameOver = false;
+  let speedMultiplier = 1;
+  let spawnTimer = 0;
+  let spawnInterval = 1400; // ms
+  let obstacles = [];
+  let particles = []; // for little effects
+  let score = 0;
+  let high = parseInt(localStorage.getItem('stickman_high') || '0', 10);
+
+  highEl.textContent = high;
+
+  // Player (stickman)
+  const player = {
+    x: 180,
+    y: H - 140,
+    vy: 0,
+    w: 36,
+    h: 72,
+    grounded: true,
+    jumpStrength: -15,
+    gravity: 0.8,
+    ducking: false,
+    runAnim: 0
+  };
+
+  // Sounds (optional): create simple beep using WebAudio if supported
+  const AudioCtx = window.AudioContext || window.webkitAudioContext;
+  const audio = AudioCtx ? new AudioCtx() : null;
+  function beep(freq = 400, dur = 0.05, vol=0.03){
+    if(!audio) return;
+    const o = audio.createOscillator();
+    const g = audio.createGain();
+    o.type = 'sine';
+    o.frequency.value = freq;
+    g.gain.value = vol;
+    o.connect(g); g.connect(audio.destination);
+    o.start();
+    o.stop(audio.currentTime + dur);
+  }
+
+  // Input
+  const keys = {};
+  window.addEventListener('keydown', e => {
+    keys[e.code] = true;
+    if ((e.code === 'Space' || e.code === 'ArrowUp') && !gameOver) jump();
+    if (e.code === 'KeyR') resetGame();
+    if (e.code === 'KeyP') togglePause();
+  });
+  window.addEventListener('keyup', e => keys[e.code] = false);
+
+  // Mouse / touch
+  canvas.addEventListener('mousedown', e => {
+    if (gameOver) { resetGame(); return; }
+    jump();
+  });
+  canvas.addEventListener('touchstart', e => {
+    e.preventDefault();
+    if (gameOver) { resetGame(); return; }
+    jump();
+  }, {passive:false});
+
+  function jump(){
+    if (player.grounded) {
+      player.vy = player.jumpStrength;
+      player.grounded = false;
+      beep(600, 0.05, 0.05);
+    } else {
+      // mid-air small hop (double-jump disabled; you can enable here)
+    }
+  }
+
+  // Obstacles factory
+  function spawnObstacle(){
+    const h = 40 + Math.random()*70;
+    const type = Math.random() < 0.15 ? 'tall' : 'box'; // occasional tall
+    const width = 28 + Math.random()*50;
+    const gap = 12 + Math.random()*30;
+    const y = H - 100 - (type === 'tall' ? (h-40) : 0); // tall ones start higher
+    obstacles.push({
+      x: W + 40,
+      y,
+      w: width,
+      h,
+      gap,
+      color: '#e6eef8',
+      speed: 6 * speedMultiplier,
+      passed: false,
+      type
+    });
+  }
+
+  // Particles for visual polish
+  function spawnParticles(x,y,count=6){
+    for(let i=0;i<count;i++){
+      particles.push({
+        x,y,
+        vx: (Math.random()-0.5)*6,
+        vy: -Math.random()*4 -1,
+        life: 30 + Math.random()*30,
+        size: 2 + Math.random()*4
+      });
+    }
+  }
+
+  // Game reset
+  function resetGame(){
+    obstacles = [];
+    particles = [];
+    score = 0;
+    spawnTimer = 0;
+    speedMultiplier = 1;
+    spawnInterval = 1200;
+    player.y = H - 140;
+    player.vy = 0;
+    player.grounded = true;
+    gameOver = false;
+    running = true;
+    lastTime = performance.now();
+    beep(420,0.06,0.05);
+  }
+
+  // Pause toggle
+  function togglePause(){
+    running = !running;
+    pauseBtn.textContent = running ? 'Pause' : 'Resume';
+    if (running) { lastTime = performance.now(); requestAnimationFrame(loop); }
+  }
+  pauseBtn.addEventListener('click', togglePause);
+
+  resetBtn.addEventListener('click', () => {
+    localStorage.removeItem('stickman_high');
+    high = 0; highEl.textContent = high;
+  });
+
+  // Collision detection (AABB)
+  function collides(a,b){
+    return !(a.x + a.w < b.x || a.x > b.x + b.w || a.y + a.h < b.y || a.y > b.y + b.h);
+  }
+
+  // Draw a simple stickman
+  function drawStickman(ctx, p, t){
+    // p = {x,y,w,h}
+    const cx = p.x;
+    const cy = p.y;
+    // head
+    ctx.beginPath();
+    ctx.arc(cx, cy - p.h + 18, 12, 0, Math.PI*2);
+    ctx.fillStyle = '#f8fafc';
+    ctx.fill();
+    // body
+    ctx.strokeStyle = '#e6eef8';
+    ctx.lineWidth = 4;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(cx, cy - p.h + 32);
+    ctx.lineTo(cx, cy - p.h + 62);
+    ctx.stroke();
+    // arms (swinging by t)
+    const armSwing = Math.sin(t*0.015) * 10;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy - p.h + 40);
+    ctx.lineTo(cx + 18 + armSwing, cy - p.h + 48);
+    ctx.moveTo(cx, cy - p.h + 40);
+    ctx.lineTo(cx - 18 - armSwing, cy - p.h + 48);
+    ctx.stroke();
+    // legs
+    const legSwing = Math.sin(t*0.02) * 12;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy - p.h + 62);
+    ctx.lineTo(cx + 18 + legSwing, cy - p.h + 98);
+    ctx.moveTo(cx, cy - p.h + 62);
+    ctx.lineTo(cx - 18 - legSwing, cy - p.h + 98);
+    ctx.stroke();
+  }
+
+  // Main loop
+  function loop(ts){
+    if (!lastTime) lastTime = ts;
+    const dt = ts - lastTime;
+    lastTime = ts;
+    if (!running) return;
+
+    // Update physics
+    // apply gravity
+    if (!player.grounded) {
+      player.vy += player.gravity;
+      player.y += player.vy;
+      if (player.y >= H - 140) {
+        player.y = H - 140;
+        player.vy = 0;
+        player.grounded = true;
+      }
+    } else {
+      // small run animation index
+      player.runAnim += dt * 0.02;
+    }
+
+    // spawn obstacles
+    spawnTimer += dt;
+    if (spawnTimer > spawnInterval) {
+      spawnTimer = 0;
+      spawnInterval = 800 + Math.random()*1000 / speedMultiplier; // speed influences spawning
+      spawnObstacle();
+    }
+
+    // update obstacles
+    for (let i = obstacles.length - 1; i >= 0; i--) {
+      const o = obstacles[i];
+      o.x -= o.speed;
+      // mark passed for scoring
+      if (!o.passed && o.x + o.w < player.x) {
+        o.passed = true;
+        score += 1;
+        scoreEl.textContent = score;
+        beep(800 - Math.min(score*8,400), 0.02, 0.02);
+        // increase difficulty
+        if (score % 5 === 0) {
+          speedMultiplier += 0.12;
+          spawnInterval = Math.max(550, spawnInterval - 80);
+        }
+      }
+      // collision box for stickman (approx)
+      const playerBox = { x: player.x - 18, y: player.y - player.h + 12, w: 36, h: player.h - 8 };
+      const obsBox = { x: o.x, y: o.y, w: o.w, h: o.h };
+      if (collides(playerBox, obsBox)) {
+        // game over
+        gameOver = true;
+        running = false;
+        beep(160, 0.25, 0.08);
+        // store high score
+        if (score > high) {
+          high = score;
+          localStorage.setItem('stickman_high', String(high));
+          highEl.textContent = high;
+        }
+      }
+      if (o.x + o.w < -50) obstacles.splice(i,1);
+    }
+
+    // update particles
+    for (let i = particles.length-1; i>=0; i--){
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.18;
+      p.life -= 1;
+      if (p.life <= 0) particles.splice(i,1);
+    }
+
+    // visual: ground and parallax
+    // draw
+    ctx.clearRect(0,0,W,H);
+
+    // sky gradient
+    const g = ctx.createLinearGradient(0,0,0,H);
+    g.addColorStop(0, '#081226');
+    g.addColorStop(0.5, '#071428');
+    g.addColorStop(1, '#051118');
+    ctx.fillStyle = g;
+    ctx.fillRect(0,0,W,H);
+
+    // distant mountains / shapes (parallax) using score to vary
+    ctx.save();
+    ctx.globalAlpha = 0.12;
+    ctx.fillStyle = '#102634';
+    for (let i=0;i<5;i++){
+      const px = (i*350 - (score*speedMultiplier*6 % 350));
+      ctx.beginPath();
+      ctx.ellipse(px + 80, H - 220 - (i*6), 260, 80, 0, 0, Math.PI*2);
+      ctx.fill();
+    }
+    ctx.restore();
+
+    // ground
+    ctx.fillStyle = 'rgba(20,30,40,0.98)';
+    ctx.fillRect(0, H - 88, W, 88);
+
+    // ground line detail
+    ctx.strokeStyle = '#0f1724';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    for (let x=0;x<=W;x+=24){
+      ctx.moveTo(x + (score*1.5 % 24), H - 88);
+      ctx.lineTo(x + (score*1.5 % 24), H - 78);
+    }
+    ctx.stroke();
+
+    // obstacles
+    obstacles.forEach(o => {
+      ctx.fillStyle = o.type === 'tall' ? '#f97316' : '#a5b4fc';
+      ctx.fillRect(o.x, o.y, o.w, o.h);
+      // little shadow
+      ctx.fillStyle = 'rgba(0,0,0,0.12)';
+      ctx.fillRect(o.x, o.y + o.h - 6, o.w, 6);
+    });
+
+    // particles
+    particles.forEach(p => {
+      ctx.fillStyle = '#ffd7a6';
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+      ctx.fill();
+    });
+
+    // draw stickman
+    const playerBox = { x: player.x, y: player.y, w: player.w, h: player.h };
+    drawStickman(ctx, playerBox, ts);
+
+    // score text (in canvas)
+    ctx.font = '18px ui-sans-serif,system-ui';
+    ctx.fillStyle = 'rgba(255,255,255,0.06)';
+    ctx.fillText(`Speed: ${speedMultiplier.toFixed(2)}`, 24, 28);
+
+    // if game over overlay
+    if (gameOver) {
+      ctx.fillStyle = 'rgba(0,0,0,0.5)';
+      ctx.fillRect(0,0,W,H);
+      ctx.fillStyle = '#fff';
+      ctx.textAlign = 'center';
+      ctx.font = 'bold 54px system-ui,Segoe UI';
+      ctx.fillText('Game Over', W/2, H/2 - 20);
+      ctx.font = '20px system-ui';
+      ctx.fillText(`Score: ${score}   •   Top: ${high}`, W/2, H/2 + 20);
+      ctx.font = '16px system-ui';
+      ctx.fillText('Click / Tap or press R to try again', W/2, H/2 + 58);
+    }
+
+    // continue loop
+    if (!gameOver) {
+      requestAnimationFrame(loop);
+    }
+  }
+
+  // kick off game loop
+  resetGame();
+  requestAnimationFrame(loop);
+
+  // small polish: spawn some dust when landing
+  const landingCheck = setInterval(() => {
+    if (player.grounded && Math.abs(player.vy) < 0.1) {
+      // spawn occasional dust if moving fast
+      if (Math.random() < 0.04) spawnParticles(player.x - 10, player.y + 4, 4);
+    }
+  }, 120);
+
+  // accessibility: reduce motion if user prefers
+  const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (mq.matches) {
+    // slow animations, reduce particle count
+    player.gravity = 0.6;
+  }
+
+  // expose for debugging (optional)
+  window._stickman = {
+    reset: resetGame,
+    getState: () => ({score, high, obstacles, player})
+  };
+})();
+</script>
+</body>
+</html>

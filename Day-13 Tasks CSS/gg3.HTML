@@ -1,0 +1,933 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Stickman Runner 2.0</title>
+<style>
+  :root{
+    --bg:#071028;
+    --panel:#0f1724;
+    --accent:#60a5fa;
+    --accent2:#38bdf8;
+    --muted:#9aa9bb;
+    --danger:#fb7185;
+    --gold:#f59e0b;
+  }
+  html,body{
+    height:100%;
+    margin:0;
+    font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+    background: radial-gradient(900px 500px at 10% 10%, #081229 0%, var(--bg) 25%, #031021 70%);
+    color:#e6eef8;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+  }
+  .container{
+    width:1000px;
+    max-width:96vw;
+    aspect-ratio:16/9;
+    display:grid;
+    grid-template-rows:auto 1fr auto;
+    gap:10px;
+    padding:12px;
+    box-sizing:border-box;
+  }
+
+  .topbar{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    align-items:center;
+  }
+  .title{
+    font-weight:700;
+    font-size:18px;
+    letter-spacing:0.2px;
+  }
+  .controls {
+    display:flex;
+    gap:8px;
+    align-items:center;
+  }
+  .btn{
+    background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.04);
+    padding:8px 12px;
+    border-radius:10px;
+    color:#dbeafe;
+    cursor:pointer;
+    font-weight:600;
+    font-size:13px;
+  }
+  .small{
+    font-size:13px;
+    color:var(--muted);
+    padding:6px 8px;
+    border-radius:8px;
+    background:rgba(255,255,255,0.02);
+  }
+
+  /* Canvas panel */
+  .game-wrap{
+    position:relative;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow: 0 10px 40px rgba(2,6,23,0.8);
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.03));
+  }
+  canvas{
+    display:block;
+    width:100%;
+    height:100%;
+    background:transparent;
+  }
+
+  /* HUD area */
+  .hud{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+  }
+  .panel{
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    padding:8px 12px;
+    border-radius:8px;
+    color:var(--muted);
+    font-weight:700;
+    font-size:14px;
+    display:flex;
+    gap:8px;
+    align-items:center;
+  }
+  .panel strong{ color:var(--accent); font-weight:900; }
+
+  /* Start menu overlay */
+  .overlay {
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(180deg, rgba(2,6,23,0.55), rgba(2,6,23,0.7));
+    z-index:50;
+    padding:20px;
+    box-sizing:border-box;
+  }
+  .menu{
+    width:760px;
+    max-width:94%;
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:12px;
+    padding:18px;
+    border:1px solid rgba(255,255,255,0.04);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    color:#cfe6ff;
+  }
+  .menu h1{ margin:0 0 6px 0; font-size:22px; }
+  .menu p{ margin:0 0 12px 0; color:var(--muted); }
+  .row{ display:flex; gap:12px; align-items:center; margin-bottom:12px; flex-wrap:wrap; }
+  .select{
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.06);
+    padding:8px 10px;
+    border-radius:8px;
+    color:#e6eef8;
+    font-weight:700;
+  }
+  label { font-size:14px; color:var(--muted); }
+
+  .instructions{
+    background:rgba(255,255,255,0.02);
+    padding:10px;
+    border-radius:8px;
+    font-size:13px;
+    color:var(--muted);
+  }
+
+  .statline{ display:flex; gap:12px; margin-top:8px; align-items:center; }
+
+  .footer{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+  }
+
+  /* Mobile controls (simple) */
+  .touch-controls{
+    position:absolute;
+    bottom:18px;
+    right:18px;
+    display:flex;
+    gap:8px;
+    z-index:60;
+  }
+  .touch-btn{
+    width:52px;
+    height:52px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.04);
+    color:#dbeafe;
+    font-weight:800;
+    font-size:18px;
+    user-select:none;
+    -webkit-user-select:none;
+  }
+
+  /* Responsive */
+  @media (max-width:700px){
+    .menu{ padding:12px; }
+    .title{ font-size:16px; }
+    .btn{ padding:8px 10px; font-size:12px; }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="topbar">
+      <div class="title">Stickman Runner 2.0 — Obstacles & Speed Power-up</div>
+      <div class="controls">
+        <div class="panel">Score: <strong id="score">0</strong></div>
+        <div class="panel">Top: <strong id="topScore">0</strong></div>
+        <button class="btn" id="pauseBtn">Pause</button>
+        <button class="btn" id="resetHighBtn">Reset High</button>
+      </div>
+    </div>
+
+    <div class="game-wrap" id="gameWrap">
+      <canvas id="game"></canvas>
+
+      <!-- Start menu overlay -->
+      <div class="overlay" id="overlay">
+        <div class="menu">
+          <h1>Stickman Runner</h1>
+          <p>Run, jump and dodge! Collect the blue orb to run twice as fast for 5 seconds. Choose difficulty, then press Start.</p>
+
+          <div class="row">
+            <label>Difficulty:</label>
+            <select id="difficulty" class="select">
+              <option value="easy">Easy — fewer obstacles</option>
+              <option value="normal" selected>Normal — balanced</option>
+              <option value="hard">Hard — more obstacles, faster</option>
+            </select>
+
+            <label>Audio:</label>
+            <select id="audioSel" class="select">
+              <option value="on" selected>On</option>
+              <option value="off">Off</option>
+            </select>
+
+            <div style="flex:1"></div>
+
+            <button class="btn" id="startBtn">Start Game</button>
+          </div>
+
+          <div class="instructions">
+            <strong>Controls:</strong> Space / Up arrow / Click / Tap to jump. Press R to restart after game over. Press P to pause/resume.<br>
+            <strong>Power-up:</strong> Blue orb gives 2× speed for 5s (temporary). Collect carefully!<br>
+            <strong>Obstacles:</strong> Rolling wheels, flying enemies (sine wave), and fast spikes.
+          </div>
+
+          <div class="statline">
+            <div class="small">Tip: On Hard, the orb is rarer — focus on dodging!</div>
+            <div style="flex:1"></div>
+            <div style="color:var(--muted)">Made for learning — editable single-file game</div>
+          </div>
+
+          <div class="footer" style="margin-top:12px">
+            <div style="color:var(--muted); font-size:13px">Version 2.0</div>
+            <div>
+              <button class="btn" id="showCredits">Credits</button>
+              <button class="btn" id="helpBtn">How to Play</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Simple touch buttons for mobile -->
+      <div class="touch-controls" id="touchControls" aria-hidden="true">
+        <div class="touch-btn" id="jumpBtn">↑</div>
+      </div>
+    </div>
+
+    <div class="hud">
+      <div class="panel">Speed: <strong id="speedVal">1.00×</strong></div>
+      <div class="panel">Power-up: <strong id="powerState">None</strong></div>
+      <div style="flex:1"></div>
+      <div class="small">Stickman Runner — press Start to play</div>
+    </div>
+  </div>
+
+<script>
+/* =========================
+   Stickman Runner 2.0
+   Single-file HTML/CSS/JS
+   Features:
+     - obstacles: wheel, spike, flying
+     - speed power-up orb (2x for 5s)
+     - start menu with difficulty
+     - pause, high score (localStorage)
+   ========================= */
+
+(() => {
+  // Canvas setup
+  const canvas = document.getElementById('game');
+  const ctx = canvas.getContext('2d');
+
+  // Logical resolution
+  const LOG_W = 1280, LOG_H = 720;
+  canvas.width = LOG_W;
+  canvas.height = LOG_H;
+
+  // DOM elements
+  const overlay = document.getElementById('overlay');
+  const startBtn = document.getElementById('startBtn');
+  const difficultySel = document.getElementById('difficulty');
+  const scoreEl = document.getElementById('score');
+  const topEl = document.getElementById('topScore');
+  const speedEl = document.getElementById('speedVal');
+  const powerStateEl = document.getElementById('powerState');
+  const pauseBtn = document.getElementById('pauseBtn');
+  const resetHighBtn = document.getElementById('resetHighBtn');
+  const jumpBtn = document.getElementById('jumpBtn');
+  const audioSel = document.getElementById('audioSel');
+
+  // Retrieve high score
+  let topScore = parseInt(localStorage.getItem('stickman_top') || '0', 10);
+  topEl.textContent = topScore;
+
+  // Game variables
+  let lastTs = 0;
+  let running = false;      // main loop running
+  let playing = false;      // in active play (not in menu)
+  let paused = false;
+  let gameOver = false;
+  let difficulty = 'normal';
+
+  // Difficulty parameters
+  const difficultyParams = {
+    easy: { baseSpeed: 5.2, spawnRate: 1600, orbChance: 0.015 },
+    normal: { baseSpeed: 6.4, spawnRate: 1200, orbChance: 0.01 },
+    hard: { baseSpeed: 8.0, spawnRate: 900, orbChance: 0.007 }
+  };
+
+  // Player (stickman) model
+  const player = {
+    x: 200,
+    y: LOG_H - 150,
+    w: 40,
+    h: 84,
+    vy: 0,
+    grounded: true,
+    jumpForce: -16.5,
+    gravity: 0.9,
+    runningAnim: 0
+  };
+
+  // Entities
+  let obstacles = [];   // {type, x,y,w,h, ...}
+  let powerups = [];    // orb objects
+  let particles = [];   // visual effects
+
+  // Score & speed
+  let score = 0;
+  let speedMult = 1;          // global difficulty multiplier (increased by orb)
+  let baseSpeed = difficultyParams.normal.baseSpeed;
+  let spawnTimer = 0;
+  let spawnInterval = difficultyParams.normal.spawnRate;
+
+  // Power-up state
+  let powerActive = false;
+  let powerTimeoutId = null;
+  let powerRemaining = 0;
+
+  // Audio (simple beeps)
+  const AudioCtx = window.AudioContext || window.webkitAudioContext;
+  const audioCtx = AudioCtx && audioSel.value === 'on' ? new AudioCtx() : null;
+  function playTone(freq=440, dur=0.06, vol=0.03){
+    if (!audioCtx || audioSel.value === 'off') return;
+    const o = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    o.type = 'sine';
+    o.frequency.value = freq;
+    g.gain.value = vol;
+    o.connect(g); g.connect(audioCtx.destination);
+    o.start();
+    o.stop(audioCtx.currentTime + dur);
+  }
+
+  // Utility functions
+  function rand(min, max){ return Math.random()*(max-min)+min; }
+  function now(){ return performance.now(); }
+
+  // Input handling
+  const keys = {};
+  window.addEventListener('keydown', e => {
+    keys[e.code] = true;
+    if (!playing) return;
+    if ((e.code === 'Space' || e.code === 'ArrowUp') && !gameOver) tryJump();
+    if (e.code === 'KeyR') { if (gameOver) restart(); }
+    if (e.code === 'KeyP') togglePause();
+  });
+  window.addEventListener('keyup', e => keys[e.code] = false);
+
+  // Mouse / touch controls
+  canvas.addEventListener('mousedown', onTap);
+  canvas.addEventListener('touchstart', onTap, {passive:false});
+  jumpBtn.addEventListener('click', onTap);
+
+  function onTap(e){
+    e.preventDefault && e.preventDefault();
+    if (!playing) return;
+    if (gameOver) { restart(); return; }
+    tryJump();
+  }
+
+  function tryJump(){
+    if (player.grounded){
+      player.vy = player.jumpForce;
+      player.grounded = false;
+      spawnParticles(player.x - 10, player.y + player.h - 12, 8);
+      playTone(720,0.05,0.04);
+    }
+  }
+
+  // Start, Pause, Restart
+  startBtn.addEventListener('click', () => {
+    difficulty = difficultySel.value;
+    startGame();
+    overlay.style.display = 'none';
+  });
+
+  document.getElementById('showCredits')?.addEventListener('click', () => {
+    alert('Stickman Runner 2.0 — created for you. Editable single-file game.');
+  });
+
+  pauseBtn.addEventListener('click', togglePause);
+  resetHighBtn.addEventListener('click', () => {
+    localStorage.removeItem('stickman_top');
+    topScore = 0; topEl.textContent = 0;
+  });
+
+  function startGame(){
+    // apply difficulty
+    const d = difficultyParams[difficulty];
+    baseSpeed = d.baseSpeed;
+    spawnInterval = d.spawnRate;
+    speedMult = 1;
+    obstacles = [];
+    powerups = [];
+    particles = [];
+    score = 0;
+    powerActive = false;
+    powerRemaining = 0;
+    player.y = LOG_H - 150;
+    player.vy = 0;
+    player.grounded = true;
+    gameOver = false;
+    playing = true;
+    paused = false;
+    lastTs = now();
+    running = true;
+    playTone(540,0.08,0.04);
+    requestAnimationFrame(loop);
+  }
+
+  function togglePause(){
+    if (!playing) return;
+    paused = !paused;
+    pauseBtn.textContent = paused ? 'Resume' : 'Pause';
+    if (!paused) { lastTs = now(); requestAnimationFrame(loop); }
+  }
+
+  function restart(){
+    startGame();
+  }
+
+  /* ----------------------------
+     Obstacles & Power-up spawner
+     ---------------------------- */
+
+  function spawnObstacle(){
+    // lane: ground obstacles or flying
+    const r = Math.random();
+    if (r < 0.12){
+      // flying enemy (sine wave)
+      const fy = rand(120, 300);
+      obstacles.push({
+        kind: 'flying',
+        x: LOG_W + 60,
+        yBase: fy,
+        y: fy,
+        amp: rand(18, 48),
+        freq: rand(0.006, 0.016),
+        w: 58, h: 44,
+        speed: baseSpeed * speedMult + rand(0.6, 1.4)
+      });
+    } else if (r < 0.48) {
+      // rolling wheel
+      const h = rand(40, 70);
+      obstacles.push({
+        kind: 'wheel',
+        x: LOG_W + 40,
+        y: LOG_H - 128 - (h-40),
+        w: h, h: h,
+        rotation: 0,
+        rotSpeed: rand(0.15, 0.4),
+        speed: baseSpeed * speedMult + rand(0.6, 1.2)
+      });
+    } else {
+      // spikes - small fast and low
+      const w = rand(20, 36);
+      const h = rand(26, 40);
+      obstacles.push({
+        kind: 'spike',
+        x: LOG_W + 40,
+        y: LOG_H - 122 - (h-26),
+        w, h,
+        speed: baseSpeed * speedMult + rand(1.2, 2.2)
+      });
+    }
+  }
+
+  function spawnPowerup(){
+    // orb: appears above ground; chance depends on difficulty
+    const d = difficultyParams[difficulty];
+    if (Math.random() < d.orbChance){
+      powerups.push({
+        x: LOG_W + 60,
+        y: rand(LOG_H - 300, LOG_H - 260),
+        w: 28,
+        h: 28,
+        speed: baseSpeed * speedMult - 0.6,
+        glow: Math.random()*360,
+        trail: []
+      });
+    }
+  }
+
+  /* ----------------------------
+     Collision helpers
+     ---------------------------- */
+  function aabb(a,b){
+    return !(a.x + a.w < b.x || a.x > b.x + b.w || a.y + a.h < b.y || a.y > b.y + b.h);
+  }
+
+  /* ----------------------------
+     Particles
+     ---------------------------- */
+  function spawnParticles(x,y,count=6){
+    for (let i=0;i<count;i++){
+      particles.push({
+        x, y,
+        vx: (Math.random()-0.5)*6,
+        vy: -Math.random()*6 - 1,
+        life: 30 + Math.random()*30,
+        size: 2 + Math.random()*4,
+        alpha: 1
+      });
+    }
+  }
+
+  /* ----------------------------
+     Power-up activation
+     ---------------------------- */
+  function activateSpeedPower(){
+    clearTimeout(powerTimeoutId);
+    powerActive = true;
+    powerRemaining = 5.0; // seconds
+    powerStateEl.textContent = 'Speed ×2';
+    speedMult = 2.0;
+    // Play sound
+    playTone(1100, 0.12, 0.06);
+
+    // schedule deactivation after 5s
+    powerTimeoutId = setTimeout(() => {
+      powerActive = false;
+      speedMult = 1.0;
+      powerStateEl.textContent = 'None';
+      playTone(220, 0.12, 0.04);
+    }, 5000);
+  }
+
+  /* ----------------------------
+     Drawing helpers
+     ---------------------------- */
+  function drawStickman(ctx, p, t){
+    const cx = p.x, cy = p.y;
+    // head
+    ctx.fillStyle = '#f8fafc';
+    ctx.beginPath();
+    ctx.arc(cx, cy - p.h + 18, 12, 0, Math.PI*2);
+    ctx.fill();
+
+    // body
+    ctx.strokeStyle = '#e6eef8';
+    ctx.lineWidth = 4;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(cx, cy - p.h + 32);
+    ctx.lineTo(cx, cy - p.h + 62);
+    ctx.stroke();
+
+    // arms (swinging)
+    const arm = Math.sin(t*0.015) * 12;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy - p.h + 40);
+    ctx.lineTo(cx + 22 + arm, cy - p.h + 52);
+    ctx.moveTo(cx, cy - p.h + 40);
+    ctx.lineTo(cx - 22 - arm, cy - p.h + 52);
+    ctx.stroke();
+
+    // legs
+    const leg = Math.sin(t*0.02) * 14;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy - p.h + 62);
+    ctx.lineTo(cx + 22 + leg, cy - p.h + 106);
+    ctx.moveTo(cx, cy - p.h + 62);
+    ctx.lineTo(cx - 22 - leg, cy - p.h + 106);
+    ctx.stroke();
+  }
+
+  /* ----------------------------
+     Main loop
+     ---------------------------- */
+  function loop(ts){
+    if (!running) return;
+    if (paused) return;
+
+    const dt = Math.min(40, ts - lastTs); // ms cap
+    lastTs = ts;
+
+    // Physics update
+    if (!player.grounded){
+      player.vy += player.gravity;
+      player.y += player.vy;
+      if (player.y >= LOG_H - 150){
+        player.y = LOG_H - 150;
+        player.vy = 0;
+        player.grounded = true;
+        spawnParticles(player.x - 12, player.y + player.h - 16, 10);
+      }
+    } else {
+      player.runningAnim += dt * 0.02;
+    }
+
+    // spawn logic
+    spawnTimer += dt;
+    if (spawnTimer > spawnInterval){
+      spawnTimer = 0;
+      // spawn obstacle and sometimes a powerup
+      spawnObstacle();
+      // occasional power-up spawn
+      if (Math.random() < 0.25) spawnPowerup();
+      // slight random jitter for interval
+      spawnInterval = difficultyParams[difficulty].spawnRate + rand(-200, 300);
+    }
+
+    // Update obstacles
+    for (let i = obstacles.length - 1; i >= 0; i--){
+      const o = obstacles[i];
+      o.x -= o.speed * (dt/16) ; // scale with dt
+      // flying y movement
+      if (o.kind === 'flying'){
+        o.y = o.yBase + Math.sin(ts * o.freq) * o.amp;
+      }
+      if (o.kind === 'wheel'){
+        o.rotation += o.rotSpeed * (dt/16);
+      }
+      // collision with player
+      const playerBox = { x: player.x - 20, y: player.y - player.h + 12, w: player.w, h: player.h - 12 };
+      const obsBox = { x: o.x, y: o.y, w: o.w, h: o.h };
+      if (aabb(playerBox, obsBox)){
+        // hit -> game over
+        gameOver = true;
+        playing = false;
+        running = false;
+        // save high score
+        if (score > topScore){ topScore = score; localStorage.setItem('stickman_top', String(topScore)); topEl.textContent = topScore; }
+        // sound
+        playTone(160, 0.25, 0.08);
+        // show overlay to restart (we'll show a small in-canvas message)
+      }
+
+      // remove offscreen
+      if (o.x + o.w < -80) obstacles.splice(i,1);
+    }
+
+    // Update powerups
+    for (let i = powerups.length - 1; i >= 0; i--){
+      const p = powerups[i];
+      p.x -= p.speed * (dt/16);
+      // store trail
+      p.trail.unshift({x:p.x + p.w/2, y:p.y + p.h/2, life: 18});
+      if (p.trail.length > 12) p.trail.pop();
+
+      // collision with player
+      const playerBox = { x: player.x - 20, y: player.y - player.h + 12, w: player.w, h: player.h - 12 };
+      const puBox = { x: p.x, y: p.y, w: p.w, h: p.h };
+      if (aabb(playerBox, puBox)){
+        // collect
+        powerups.splice(i,1);
+        activateSpeedPower();
+        spawnParticles(p.x + p.w/2, p.y + p.h/2, 12);
+      } else if (p.x + p.w < -60) {
+        powerups.splice(i,1);
+      }
+    }
+
+    // Update particles
+    for (let i = particles.length - 1; i >= 0; i--){
+      const par = particles[i];
+      par.x += par.vx * (dt/16);
+      par.y += par.vy * (dt/16);
+      par.vy += 0.28 * (dt/16);
+      par.life -= 1 * (dt/16);
+      par.alpha = Math.max(0, par.life / 60);
+      if (par.life <= 0) particles.splice(i,1);
+    }
+
+    // Score update (increment slowly with time and obstacles passed)
+    // We'll increase score when obstacles pass the player
+    obstacles.forEach(o => {
+      if (!o.passed && o.x + o.w < player.x - 10){
+        o.passed = true;
+        score += 1;
+        scoreEl.textContent = score;
+        playTone(800 - Math.min(score*6, 400), 0.02, 0.02);
+        // difficulty ramp: slight speed up every 6 points
+        if (score % 6 === 0 && !powerActive){
+          baseSpeed *= 1.06;
+        }
+      }
+    });
+
+    // power timer update
+    if (powerActive){
+      // show remaining (approx)
+      // powerRemaining updated by timeout only; we display an approximate countdown by reading remaining time using a simple decrement per loop
+      // For reliability we'll maintain powerRemaining using timestamp logic:
+      // For simplicity: we decrement by dt/1000 here to show a countdown.
+      // (Note: actual deactivation is handled by timeoutId above.)
+      powerRemaining = Math.max(0, powerRemaining - dt/1000);
+      powerStateEl.textContent = `Speed ×2 (${powerRemaining.toFixed(1)}s)`;
+    } else {
+      powerStateEl.textContent = 'None';
+    }
+
+    // Update speed display
+    speedEl.textContent = `${(speedMult).toFixed(2)}×`;
+
+    // Render
+    render(ts);
+
+    // Continue loop if still running
+    if (!gameOver && running){
+      requestAnimationFrame(loop);
+    } else if (gameOver) {
+      // show game over message inside canvas and show overlay after short delay
+      setTimeout(() => {
+        overlay.style.display = 'flex';
+        // modify overlay to show restart prompt
+        overlay.querySelector('.menu h1').textContent = 'Game Over';
+        overlay.querySelector('.menu p').textContent = `Your Score: ${score}  •  Top: ${topScore}. Press Start to play again.`;
+        // reset difficulty text etc. keep options intact
+      }, 400);
+    }
+  }
+
+  /* ----------------------------
+     Render function
+     ---------------------------- */
+  function render(ts){
+    // Clear
+    ctx.clearRect(0,0,LOG_W,LOG_H);
+
+    // Sky gradient
+    const g = ctx.createLinearGradient(0,0,0,LOG_H);
+    g.addColorStop(0, '#052034');
+    g.addColorStop(0.6, '#041726');
+    g.addColorStop(1, '#021019');
+    ctx.fillStyle = g;
+    ctx.fillRect(0,0,LOG_W,LOG_H);
+
+    // Parallax shapes/mountains
+    ctx.save();
+    ctx.globalAlpha = 0.12;
+    ctx.fillStyle = '#06263a';
+    for (let i=0;i<6;i++){
+      const px = (i*360 - (score*0.6 % 360));
+      ctx.beginPath();
+      ctx.ellipse(px + 160, LOG_H - 260 - (i*6), 320, 98, 0, 0, Math.PI*2);
+      ctx.fill();
+    }
+    ctx.restore();
+
+    // ground
+    ctx.fillStyle = 'rgba(16,24,33,0.98)';
+    ctx.fillRect(0, LOG_H - 120, LOG_W, 120);
+
+    // ground detail
+    ctx.strokeStyle = '#0b1620';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    for (let x=0;x<=LOG_W;x+=26){
+      ctx.moveTo(x + (score*1.2 % 26), LOG_H - 120);
+      ctx.lineTo(x + (score*1.2 % 26), LOG_H - 106);
+    }
+    ctx.stroke();
+
+    // Draw powerups (orb) with trail
+    powerups.forEach(p => {
+      // trail
+      ctx.save();
+      p.trail.forEach((t,i) => {
+        ctx.globalAlpha = (1 - i / p.trail.length) * 0.5;
+        ctx.beginPath();
+        ctx.arc(t.x, t.y, 8 * (1 - i / p.trail.length), 0, Math.PI*2);
+        ctx.fillStyle = '#7dd3fc';
+        ctx.fill();
+      });
+      ctx.globalAlpha = 1;
+      // orb glow
+      ctx.beginPath();
+      const grad = ctx.createRadialGradient(p.x + p.w/2, p.y + p.h/2, 2, p.x + p.w/2, p.y + p.h/2, 40);
+      grad.addColorStop(0, 'rgba(96,165,250,0.95)');
+      grad.addColorStop(0.6, 'rgba(56,189,248,0.25)');
+      grad.addColorStop(1, 'rgba(56,189,248,0.02)');
+      ctx.fillStyle = grad;
+      ctx.arc(p.x + p.w/2, p.y + p.h/2, 40, 0, Math.PI*2);
+      ctx.fill();
+      // orb core
+      ctx.beginPath();
+      ctx.fillStyle = '#38bdf8';
+      ctx.arc(p.x + p.w/2, p.y + p.h/2, p.w/2, 0, Math.PI*2);
+      ctx.fill();
+      ctx.restore();
+    });
+
+    // Draw obstacles
+    obstacles.forEach(o => {
+      if (o.kind === 'flying'){
+        // simple bird shape
+        ctx.save();
+        ctx.translate(o.x + o.w/2, o.y + o.h/2);
+        ctx.rotate(Math.sin((o.x)/80) * 0.15);
+        ctx.fillStyle = '#fb7185';
+        ctx.beginPath();
+        ctx.ellipse(0, 0, o.w/2, o.h/2, 0, 0, Math.PI*2);
+        ctx.fill();
+        // wings
+        ctx.fillStyle = '#ef4444';
+        ctx.beginPath();
+        ctx.moveTo(-o.w/2, 0);
+        ctx.quadraticCurveTo(-o.w/2 - 18, -12, -o.w/2 + 6, -6);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(o.w/2, 0);
+        ctx.quadraticCurveTo(o.w/2 + 18, -12, o.w/2 - 6, -6);
+        ctx.fill();
+        ctx.restore();
+      } else if (o.kind === 'wheel'){
+        // rolling wheel
+        ctx.save();
+        ctx.translate(o.x + o.w/2, o.y + o.h/2);
+        ctx.rotate(o.rotation);
+        // rim
+        ctx.fillStyle = '#a3e635';
+        ctx.beginPath();
+        ctx.arc(0,0,o.w/2,0,Math.PI*2);
+        ctx.fill();
+        // spokes
+        ctx.strokeStyle = '#22543d';
+        ctx.lineWidth = 4;
+        for (let s=0;s<6;s++){
+          ctx.beginPath();
+          ctx.moveTo(0,0);
+          const ang = s*(Math.PI*2/6);
+          ctx.lineTo(Math.cos(ang)*(o.w/2 - 6), Math.sin(ang)*(o.w/2 - 6));
+          ctx.stroke();
+        }
+        ctx.restore();
+      } else if (o.kind === 'spike'){
+        // triangular spikes
+        ctx.fillStyle = '#f97316';
+        ctx.beginPath();
+        const spikeCount = Math.max(2, Math.floor(o.w / 12));
+        const sw = o.w / spikeCount;
+        for (let i=0;i<spikeCount;i++){
+          const sx = o.x + i*sw;
+          ctx.moveTo(sx, o.y + o.h);
+          ctx.lineTo(sx + sw/2, o.y);
+          ctx.lineTo(sx + sw, o.y + o.h);
+        }
+        ctx.fill();
+      }
+    });
+
+    // Draw particles
+    particles.forEach(p => {
+      ctx.globalAlpha = p.alpha;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+      ctx.fillStyle = '#ffd7a6';
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    });
+
+    // Draw stickman
+    drawStickman(ctx, {x:player.x, y:player.y, w:player.w, h:player.h}, ts);
+
+    // HUD in canvas
+    ctx.font = '18px Inter, system-ui';
+    ctx.fillStyle = 'rgba(255,255,255,0.06)';
+    ctx.fillText(`Speed: ${(speedMult).toFixed(2)}×`, 28, 28);
+
+    // If game over, overlay message
+    if (gameOver){
+      ctx.fillStyle = 'rgba(0,0,0,0.45)';
+      ctx.fillRect(0,0,LOG_W,LOG_H);
+      ctx.fillStyle = '#fff';
+      ctx.textAlign = 'center';
+      ctx.font = 'bold 64px Inter, system-ui';
+      ctx.fillText('Game Over', LOG_W/2, LOG_H/2 - 24);
+      ctx.font = '20px Inter, system-ui';
+      ctx.fillText(`Score: ${score}  •  Top: ${topScore}`, LOG_W/2, LOG_H/2 + 16);
+      ctx.textAlign = 'left';
+    }
+  }
+
+  /* ----------------------------
+     Kick off
+     ---------------------------- */
+  // initial overlay shows menu
+  overlay.style.display = 'flex';
+  // Prepare adaptive canvas scaling to fit container size
+  function fitCanvas(){
+    const wrap = document.getElementById('gameWrap');
+    const rect = wrap.getBoundingClientRect();
+    const scaleX = rect.width / LOG_W;
+    const scaleY = rect.height / LOG_H;
+    const scale = Math.min(scaleX, scaleY);
+    canvas.style.width = Math.round(LOG_W * scale) + 'px';
+    canvas.style.height = Math.round(LOG_H * scale) + 'px';
+  }
+  window.addEventListener('resize', fitCanvas);
+  fitCanvas();
+
+  // expose simple debug controls in console
+  window.stickman = {
+    startGame, restart: startGame, getState: () => ({score, topScore, obstacles, powerups})
+  };
+})();
+</script>
+</body>
+</html>
