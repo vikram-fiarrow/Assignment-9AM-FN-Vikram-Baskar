@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 18 - Practical Tasks</title>
+
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        h2 { margin-top: 30px; }
+        .box { padding: 15px; border: 1px solid #ccc; margin-top: 10px; border-radius: 8px; }
+    </style>
+</head>
+<body>
+
+    <h1>Day-18 Practical Tasks (Mini Projects)</h1>
+
+    <!-- 1. USER PROFILE OBJECT -->
+    <h2>1. User Profile (const object updated)</h2>
+    <div class="box" id="profileBox"></div>
+
+    <!-- 2. CALCULATOR USING let -->
+    <h2>2. Mini Calculator (using let variables)</h2>
+    <div class="box">
+        <p>Open console to see calculation steps.</p>
+    </div>
+
+    <!-- 3. LOOP COUNTER -->
+    <h2>3. Loop Counter (let inside loop)</h2>
+    <div class="box" id="loopResult"></div>
+
+    <!-- 4. SHOPPING CART ITEM -->
+    <h2>4. Shopping Cart Item (const object)</h2>
+    <div class="box" id="cartBox"></div>
+
+    <!-- 5. SETTINGS PANEL -->
+    <h2>5. Settings Panel (const defaults + let user preferences)</h2>
+    <div class="box" id="settingsBox"></div>
+
+
+    <script>
+     
+        // 1. USER PROFILE OBJECT
+    
+        const userProfile = {
+            name: "Vikram",
+            age: 25,
+            country: "India"
+        };
+
+        // Updating fields
+        userProfile.age = 26;
+        userProfile.country = "Thailand";
+
+        document.getElementById("profileBox").innerText =
+            `Name: ${userProfile.name}
+Age: ${userProfile.age}
+Country: ${userProfile.country}`;
+
+        // 2. MINI CALCULATOR (using let)
+
+        let num1 = 10;
+        let num2 = 5;
+
+        let sum = num1 + num2;
+        let product = sum * 2;
+
+        console.log("Calculator Results:");
+        console.log("Sum:", sum);
+        console.log("Product after multiplying by 2:", product);
+
+        // 3. LOOP COUNTER
+
+        let output = "";
+        for (let i = 1; i <= 5; i++) {
+            output += "Count: " + i + "<br>";
+        }
+        document.getElementById("loopResult").innerHTML = output;
+
+        // 4. SHOPPING CART ITEM
+
+        const cartItem = {
+            item: "Apple",
+            quantity: 3,
+            price: 10
+        };
+
+        // Update quantity
+        cartItem.quantity = 6;
+
+        document.getElementById("cartBox").innerText =
+            `${cartItem.item} - Quantity: ${cartItem.quantity} (₹${cartItem.price} each)`;
+
+        // 5. SETTINGS PANEL
+ 
+        const defaultSettings = {
+            theme: "Light",
+            fontSize: "16px"
+        };
+
+        let userTheme = "Dark";   // let because it can change
+        let userFont = "18px";
+
+        document.getElementById("settingsBox").innerHTML =
+            `Default Theme: ${defaultSettings.theme}<br>
+Default Font Size: ${defaultSettings.fontSize}<br><br>
+
+User Selected Theme: ${userTheme}<br>
+User Selected Font: ${userFont}`;
+    </script>
+
+</body>
+</html>

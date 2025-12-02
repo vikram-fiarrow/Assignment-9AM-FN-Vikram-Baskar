@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 19 - Practice Tasks</title>
+</head>
+<body>
+
+    <h1>Day 19 - Practice Tasks</h1>
+
+    <h2>1. Primitive Types</h2>
+    <pre id="typesOutput"></pre>
+
+    <h2>2. Object with 3 Properties</h2>
+    <pre id="objectOutput"></pre>
+
+    <h2>3. Conversions</h2>
+    <pre id="conversionOutput"></pre>
+
+
+<script>
+
+    // Seven Primitive Types
+    let str = "Hello";      
+    let num = 123;              
+    let bool = true;          
+    let und = undefined;        
+    let nul = null;            
+    let big = 12345678901234567890n;  
+    let sym = Symbol("id");    
+    let typesResult = `
+string → ${typeof str}
+number → ${typeof num}
+boolean → ${typeof bool}
+undefined → ${typeof und}
+null → ${typeof nul}  
+bigint → ${typeof big}
+symbol → ${typeof sym}
+`;
+
+    document.getElementById("typesOutput").innerText = typesResult;
+
+
+
+    //  Object with 3 Properties
+    const student = {
+        name: "Vikram",
+        age: 25,
+        country: "India"
+    };
+
+    let objectResult = `
+Name: ${student.name}
+Age: ${student.age}
+Country: ${student.country}
+`;
+
+    document.getElementById("objectOutput").innerText = objectResult;
+
+
+
+    // Conversions
+    let convertNumber = Number("45");  
+    let convertString = String(false); 
+
+    let conversionResult = `
+"45" converted to number → ${convertNumber}
+false converted to string → "${convertString}"
+`;
+
+    document.getElementById("conversionOutput").innerText = conversionResult;
+
+</script>
+
+</body>
+</html>

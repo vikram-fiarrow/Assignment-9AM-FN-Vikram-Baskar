@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 18 - JS Practice</title>
+</head>
+<body>
+
+<h2>Day 18 - JavaScript Variable Tasks</h2>
+<p>Open the console (F12 → Console) to see all results.</p>
+
+<script>
+    console.log("----- DAY 18 PRACTICE TASKS START -----");
+
+    //  Declare one variable with var, let and const
+    var a = "I am var";
+    let b = "I am let";
+    const c = "I am const";
+
+    console.log(a);
+    console.log(b);
+    console.log(c);
+
+    // Try to redeclare a let variable (observe error)
+    console.log("Trying to redeclare let (this will show an error):");
+    try {
+        let b = "Trying to redeclare let";  // ERROR
+    } catch (error) {
+        console.log("Error:", error.message);
+    }
+
+    // Create a TDZ error on purpose
+    console.log("Creating TDZ (Temporal Dead Zone) error:");
+    try {
+        console.log(tdzVar); // Using before declaration → TDZ error
+        let tdzVar = 50;
+    } catch (error) {
+        console.log("TDZ Error:", error.message);
+    }
+
+    // Test variable visibility inside and outside a block
+    console.log("Testing block scope:");
+
+    {
+        let insideBlock = "I am inside the block";
+        var varInside = "var is function-scoped, so accessible outside";
+        console.log(insideBlock); 
+    }
+
+    try {
+        console.log(insideBlock);  //  not accessible outside
+    } catch (error) {
+        console.log("Block Scope Error:", error.message);
+    }
+
+    console.log(varInside); // var works even outside
+
+    //  Create a const object and modify a property
+    const student = {
+        name: "Vikram",
+        age: 20
+    };
+
+    console.log("Before modification:", student);
+
+    // Modify property (valid)
+    student.age = 21;
+
+    console.log("After modification:", student);
+
+    console.log("----- END OF TASKS -----");
+</script>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Day 18 - Progressive Project (Simple)</title>
+</head>
+<body>
+
+<h2>Day-18 Progressive Project</h2>
+
+<p id="countText">Count: 0</p>
+<button onclick="increase()">Increase Counter</button>
+
+<script>
+    // 1. Using const for values that never change
+    const WEBSITE_NAME = "My Portfolio";
+    const COPYRIGHT_YEAR = new Date().getFullYear();
+
+    // 2. Using let for values that change
+    let count = 0;
+
+    // 3. UI update
+    function increase() {
+        count++;
+        document.getElementById("countText").innerText = "Count: " + count;
+    }
+
+    // 4. Using block scope
+    {
+        let greeting = "Hello from inside a block!";
+        console.log(greeting);
+    }
+
+    // 5. Console testing
+    console.log("Website:", WEBSITE_NAME);
+    console.log("Year:", COPYRIGHT_YEAR);
+    console.log("Counter ready.");
+</script>
+
+</body>
+</html>
