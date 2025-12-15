@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Day 23 - Practical Tasks</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f0f0f0; }
+        h2 { background: #222; color: white; padding: 10px; }
+        .box { background: white; padding: 20px; margin: 20px 0; border-radius: 10px; }
+        button { 
+            padding: 10px; 
+            width: 100%; 
+            margin-top: 10px; 
+            background: #333; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+        }
+        button:hover { background: black; }
+    </style>
+</head>
+
+<body>
+
+<h2>Day 23 - Practical Mini Projects</h2>
+
+<!-- USER CLASS -->
+<div class="box">
+    <h3>1. User Class</h3>
+    <button onclick="userLogin()">Login User</button>
+    <p id="userOutput"></p>
+</div>
+
+<!-- BANK ACCOUNT -->
+<div class="box">
+    <h3>2. Bank Account</h3>
+    <button onclick="bankActions()">Test Bank Account</button>
+    <p id="bankOutput"></p>
+</div>
+
+<!-- PROTOTYPE CHAIN -->
+<div class="box">
+    <h3>3. Vehicle → Car → ElectricCar (Prototype Chain)</h3>
+    <button onclick="showPrototypeChain()">Show Chain</button>
+    <p id="protoOutput"></p>
+</div>
+
+<!-- PRODUCTS + DESTRUCTURING -->
+<div class="box">
+    <h3>4. Product List with Destructuring</h3>
+    <button onclick="showProducts()">Show Products</button>
+    <p id="productOutput"></p>
+</div>
+
+<!-- STUDENT MANAGEMENT SYSTEM -->
+<div class="box">
+    <h3>5. Student Management System</h3>
+    <button onclick="studentSystem()">Run Student System</button>
+    <p id="studentOutput"></p>
+</div>
+
+
+<script>
+
+   
+        // 1. USER CLASS
+ 
+    class User {
+        constructor(name, email) {
+            this.name = name;
+            this.email = email;
+        }
+
+        login() {
+            return `${this.name} has logged in using ${this.email}`;
+        }
+    }
+
+    function userLogin() {
+        const u1 = new User("Vikram", "vikram@example.com");
+        document.getElementById("userOutput").innerText = u1.login();
+    }
+
+
+
+   
+        // 2. BANK ACCOUNT CLASS (deposit & withdraw)
+    
+    class BankAccount {
+        constructor(owner, balance) {
+            this.owner = owner;
+            this.balance = balance;
+        }
+
+        deposit(amount) {
+            this.balance += amount;
+        }
+
+        withdraw(amount) {
+            if (amount > this.balance) {
+                return "Insufficient balance";
+            }
+            this.balance -= amount;
+        }
+    }
+
+    function bankActions() {
+        const acc = new BankAccount("Vikram", 5000);
+        acc.deposit(2000);
+        acc.withdraw(1000);
+
+        document.getElementById("bankOutput").innerText = 
+            `Owner: ${acc.owner}\nBalance: ${acc.balance}`;
+    }
+
+
+
+   
+        // 3. PROTOTYPE CHAIN
+        // Vehicle to Car to ElectricCar
+
+
+    function Vehicle(type) {
+        this.type = type;
+    }
+
+    Vehicle.prototype.showType = function() {
+        return `Vehicle Type: ${this.type}`;
+    };
+
+    function Car(type, brand) {
+        Vehicle.call(this, type);
+        this.brand = brand;
+    }
+
+    Car.prototype = Object.create(Vehicle.prototype);
+
+    function ElectricCar(type, brand, battery) {
+        Car.call(this, type, brand);
+        this.battery = battery;
+    }
+
+    ElectricCar.prototype = Object.create(Car.prototype);
+
+    function showPrototypeChain() {
+        const tesla = new ElectricCar("Electric", "Tesla", "95 kWh");
+
+        document.getElementById("protoOutput").innerText =
+            `${tesla.showType()}\nBrand: ${tesla.brand}\nBattery: ${tesla.battery}`;
+    }
+
+
+
+   
+        // 4. PRODUCT LIST + DESTRUCTURING
+
+    const products = [
+        { name: "Laptop", price: 45000 },
+        { name: "Phone", price: 25000 },
+        { name: "Tablet", price: 18000 }
+    ];
+
+    function showProducts() {
+        let output = "";
+
+        products.forEach(p => {
+            const { name, price } = p; // destructuring
+            output += `${name} – ₹${price}\n`;
+        });
+
+        document.getElementById("productOutput").innerText = output;
+    }
+
+
+
+   
+        // 5. STUDENT MANAGEMENT SYSTEM USING CLASSES
+ 
+    class Student {
+        constructor(name, grade) {
+            this.name = name;
+            this.grade = grade;
+        }
+    }
+
+    class StudentManager {
+        constructor() {
+            this.students = [];
+        }
+
+        addStudent(student) {
+            this.students.push(student);
+        }
+
+        listStudents() {
+            return this.students.map(s => `${s.name} – Grade: ${s.grade}`).join("\n");
+        }
+    }
+
+    function studentSystem() {
+        const sm = new StudentManager();
+
+        sm.addStudent(new Student("Vikram", "A"));
+        sm.addStudent(new Student("Gabi", "B"));
+        sm.addStudent(new Student("Aor", "A+"));
+
+        document.getElementById("studentOutput").innerText = sm.listStudents();
+    }
+
+</script>
+
+</body>
+</html>

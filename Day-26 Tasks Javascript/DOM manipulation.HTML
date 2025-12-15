@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- Selecting element -->
+
+    <!-- prefer querySelector and querySelectorAll as they are more versatile and powerful. -->
+
+    <script>
+
+        document.getElementById(id) /*== single element selection by id fast / returns the element object*/
+        document.getElementsByClassName(classname) /*== multiple element selection by class name / live html collection of elements*/
+        document.getElementsByTagName(tagname) /*== multiple element selection by tag name / live HTML collection of all element with given tag name*/
+        document.querySelector(selector) /*== single element selection by css selector */
+        document.querySelectorAll(selector) /*== multiple element selection by css selector / node list of all element matching the given css selector*/
+
+        // Use getElementById when you need to select a single element by its 
+        // unique ID, as it is the fastest method available.For selecting elements by class name or tag name, 
+        // getElementsByClassName and getElementsByTagName are suitable, 
+        // but they return live HTML collections which can be less flexible.
+        // For more complex selections, especially when using CSS selectors, 
+        // querySelector and querySelectorAll are preferred due to their versatility and 
+        // ability to select multiple elements easily.
+
+        // HTMLCollection is live: modify the DOM, and the collection updates automatically.
+
+
+
+
+    </script>
+</body>
+
+</html>

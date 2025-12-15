@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Day 23 - Progressive Project</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f4f4f4; }
+        h2 { background: #222; color: white; padding: 10px; border-radius: 5px; }
+        .box { background: white; padding: 20px; margin: 20px 0; border-radius: 10px; }
+        button {
+            width: 100%; padding: 10px; background: #333;
+            color: white; border: none; border-radius: 5px; cursor: pointer;
+        }
+        button:hover { background: black; }
+    </style>
+</head>
+<body>
+
+<h2>Day 23 - Progressive Project (OOP & Objects)</h2>
+
+
+<!-- USER SYSTEM -->
+<div class="box">
+    <h3>1. User System</h3>
+    <button onclick="createUser()">Create User</button>
+    <p id="userOutput"></p>
+</div>
+
+
+<!-- PRODUCT SYSTEM -->
+<div class="box">
+    <h3>2. Product List + Destructuring</h3>
+    <button onclick="showProducts()">Show Products</button>
+    <p id="productOutput"></p>
+</div>
+
+
+<!-- CART SYSTEM -->
+<div class="box">
+    <h3>3. Cart System (Add to Cart)</h3>
+    <button onclick="addToCart()">Add Product to Cart</button>
+    <button onclick="showCart()">View Cart</button>
+    <p id="cartOutput"></p>
+</div>
+
+
+<!-- INHERITANCE SYSTEM -->
+<div class="box">
+    <h3>4. Inheritance Example (Game Characters)</h3>
+    <button onclick="showCharacters()">Show Characters</button>
+    <p id="charOutput"></p>
+</div>
+
+
+<script>
+
+
+//    1. USER CLASS (Reusable Model)
+
+class User {
+    constructor(name, email) {
+        this.name = name;
+        this.email = email;
+        this.cart = [];
+    }
+
+    login() {
+        return `${this.name} logged in successfully.`;
+    }
+}
+
+let user1;
+function createUser() {
+    user1 = new User("Vikram", "vikram@example.com");
+    document.getElementById("userOutput").innerText = user1.login();
+}
+
+
+
+
+//    2. PRODUCT MODEL + DESTRUCTURING
+
+class Product {
+    constructor(name, price) {
+        this.name = name;
+        this.price = price;
+    }
+}
+
+const products = [
+    new Product("Laptop", 45000),
+    new Product("Earbuds", 3000),
+    new Product("Phone", 22000)
+];
+
+function showProducts() {
+    let output = "";
+
+    products.forEach((p) => {
+        const { name, price } = p; // destructuring
+        output += `${name} – ₹${price}\n`;
+    });
+
+    document.getElementById("productOutput").innerText = output;
+}
+
+
+
+
+//    3. CART CLASS (Add/Remove Items)
+
+class Cart {
+    constructor() {
+        this.items = [];
+    }
+
+    add(product) {
+        this.items.push(product);
+    }
+
+    getTotal() {
+        return this.items.reduce((sum, item) => sum + item.price, 0);
+    }
+}
+
+const userCart = new Cart();
+
+function addToCart() {
+ 
+    userCart.add(products[0]);
+
+    document.getElementById("cartOutput").innerText =
+        `Added: ${products[0].name}`;
+}
+
+function showCart() {
+    if (userCart.items.length === 0) {
+        document.getElementById("cartOutput").innerText = "Cart is empty.";
+        return;
+    }
+
+    let output = userCart.items.map(i => `${i.name} – ₹${i.price}`).join("\n");
+    output += `\n\nTotal: ₹${userCart.getTotal()}`;
+
+    document.getElementById("cartOutput").innerText = output;
+}
+
+
+
+
+//    4. INHERITANCE (Game Character System)
+
+
+class Character {
+    constructor(name, power) {
+        this.name = name;
+        this.power = power;
+    }
+    attack() {
+        return `${this.name} attacks with ${this.power}`;
+    }
+}
+
+class Warrior extends Character {
+    constructor(name, power, weapon) {
+        super(name, power);
+        this.weapon = weapon;
+    }
+}
+
+class Wizard extends Character {
+    constructor(name, power, spell) {
+        super(name, power);
+        this.spell = spell;
+    }
+}
+
+function showCharacters() {
+    const w1 = new Warrior("Arjun", "Strength", "Sword");
+    const m1 = new Wizard("Gabi", "Magic", "Fireball");
+
+    document.getElementById("charOutput").innerText =
+        `${w1.attack()} using ${w1.weapon}\n` +
+        `${m1.attack()} casting ${m1.spell}`;
+}
+
+</script>
+
+</body>
+</html>

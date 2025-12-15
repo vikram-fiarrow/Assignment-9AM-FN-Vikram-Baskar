@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+</head>
+<body>
+    <h2>Forms Event</h2>
+    <form action="" id="myform">
+        <input type="text" id="username" placeholder="Username"><br>
+        <label for="city">Choose your city:</label>
+        <select name="city" id="city">
+            <option value="">Select City</option>
+            <option value="chennai">Chennai</option>
+            <option value="mumbai">Mumbai</option>
+            </select>
+            <button type="button">Submit</button>
+
+    </form>
+
+    <p id="status"></p>
+
+
+
+
+
+    <script>
+        const userName = document.getElementById('username');
+        const city = document.getElementById('city');
+        const form = document.getElementById('myform');
+        const status = document.getElementById('status');
+
+        userName.addEventListener("focus" , ()=>{
+            status.textContent = "Username field is focused";
+        })
+
+         userName.addEventListener("blur" , ()=>{
+            status.textContent = "Input lost focus";
+        })
+
+        city.addEventListener("change" , ()=>{
+            status.textContent = "You selected : " + city.value;
+        })
+
+
+
+    </script>
+</body>
+</html>

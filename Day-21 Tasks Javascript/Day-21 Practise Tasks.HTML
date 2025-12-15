@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Day 21 – Loop Practice</title>
+    <style>
+        body { font-family: Arial; padding: 20px; line-height: 1.6; }
+        h2 { color: #444; }
+        .box { padding: 10px; margin: 10px 0; background: #f4f4f4; border-radius: 6px; }
+    </style>
+</head>
+<body>
+
+<h2>Day 21 - Loop Practice Tasks</h2>
+
+<div class="box" id="forLoop"></div>
+<div class="box" id="whileLoop"></div>
+<div class="box" id="doWhile"></div>
+<div class="box" id="forOf"></div>
+<div class="box" id="forIn"></div>
+
+<script>
+
+    //  Print numbers 1–10 using a for loop
+    let result1 = "";
+    for (let i = 1; i <= 10; i++) {
+        result1 += i + " ";
+    }
+    document.getElementById("forLoop").innerText = "1-10 (for loop): " + result1;
+
+
+    //  Print even numbers using a while loop
+    let result2 = "";
+    let num = 2;
+    while (num <= 20) {
+        result2 += num + " ";
+        num += 2;
+    }
+    document.getElementById("whileLoop").innerText = "Even numbers (while): " + result2;
+
+
+    //  Print 1 run even if condition is false using do…while
+    let result3 = "";
+    let x = 100;  // condition false, but still runs once
+    do {
+        result3 = "This runs once even if false! x = " + x;
+    } while (x < 10);
+
+    document.getElementById("doWhile").innerText = result3;
+
+
+    //  Loop through an array using for…of
+    const fruits = ["Apple", "Banana", "Orange"];
+    let result4 = "";
+    for (const fruit of fruits) {
+        result4 += fruit + " ";
+    }
+    document.getElementById("forOf").innerText = "Array (for…of): " + result4;
+
+
+    //  Loop through an object using for…in
+    const student = {
+        name: "Vikram",
+        age: 22,
+        course: "JavaScript"
+    };
+
+    let result5 = "";
+    for (const key in student) {
+        result5 += `${key}: ${student[key]}  `;
+    }
+
+    document.getElementById("forIn").innerText = "Object (for…in): " + result5;
+
+</script>
+
+</body>
+</html>

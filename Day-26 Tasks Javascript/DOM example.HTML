@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h2 id="title">Hello, DOM!</h2>
+    <p class="msg">Welcome to Javascript</p>
+
+    <p id="box" class="msg">This is a box</p>
+
+    <script>
+        const heading = document.getElementById('title');
+        const para = document.querySelector('.msg');
+        const boxx = document.getElementById('box');
+
+        boxx.style.color = "red";
+        boxx.style.backgroundColor = "yellow";
+        boxx.style.padding = "20px";
+
+        para.style.color = "blue"; 
+        para.style.padding = "10px";
+    </script>
+</body>
+</html>

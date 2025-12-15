@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Day 21 - Progressive Project Integration</title>
+</head>
+<body>
+  <h2>Day 21 - Progressive Project Integration</h2>
+  <p>This file shows how loops can be used to enhance your existing projects.</p>
+
+  <h3>1. Dynamic List Generation (DOM + Loop)</h3>
+  <ul id="menuList"></ul>
+
+  <h3>2. Auto-Generated Table (Loops + DOM)</h3>
+  <table border="1" cellpadding="5">
+    <thead>
+      <tr><th>Index</th><th>Product</th></tr>
+    </thead>
+    <tbody id="productTable"></tbody>
+  </table>
+
+  <h3>3. Message Processor (Array Loop)</h3>
+  <div id="messages"></div>
+
+  <h3>4. Input Validator Simulation</h3>
+  <p id="validation"></p>
+
+  <h3>5. Repeated Calculation Example</h3>
+  <p id="calcResult"></p>
+
+  <script>
+    // 1. MENU LIST USING LOOP
+    const menuItems = ["Home", "About", "Services", "Contact"]; 
+    const list = document.getElementById("menuList");
+
+    for (const item of menuItems) {
+      const li = document.createElement("li");
+      li.innerText = item;
+      list.appendChild(li);
+    }
+
+    // 2. PRODUCT TABLE
+    const products = ["Burger", "Fries", "Coke", "Pizza", "Pasta"]; 
+    const tableBody = document.getElementById("productTable");
+
+    for (let i = 0; i < products.length; i++) {
+      const row = document.createElement("tr");
+      row.innerHTML = `<td>${i}</td><td>${products[i]}</td>`;
+      tableBody.appendChild(row);
+    }
+
+    // 3. MESSAGE PROCESSOR
+    const messageArray = ["New user joined", "Payment received", "Order shipped", "Support ticket opened"]; 
+    let msgOutput = "";
+
+    for (const msg of messageArray) {
+      msgOutput += ` ${msg}<br>`;
+    }
+
+    document.getElementById("messages").innerHTML = msgOutput;
+
+    // 4. INPUT VALIDATION (SIMULATED)
+    let attempts = 0;
+    let correct = false;
+
+    while (!correct && attempts < 3) {
+      attempts++;
+      if (attempts === 3) {
+        correct = true;
+      }
+    }
+
+    document.getElementById("validation").innerText =
+      `User validated after ${attempts} attempts.`;
+
+    // 5. CALCULATION LOOP
+    const numbers = [10, 20, 30, 40];
+    let sum = 0;
+
+    for (const n of numbers) sum += n;
+
+    document.getElementById("calcResult").innerText = `Total sum is: ${sum}`;
+  </script>
+</body>
+</html>

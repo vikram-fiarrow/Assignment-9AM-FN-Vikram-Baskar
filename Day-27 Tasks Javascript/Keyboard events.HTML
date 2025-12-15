@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keyboard Events</title>
+</head>
+<body>
+    <h2>Keyboard Events</h2>
+    <input type="text" id="textBox" placeholder="type something">
+    <p id="output"></p>
+
+
+    <script>
+        const input = document.getElementById('textBox');
+        const output = document.getElementById('output');
+
+
+        input.addEventListener("keydown", ()=>{
+            output.textContent = "Key down event is triggred";
+        })
+
+
+        input.addEventListener("keypress",()=>{
+            output.textContent = "Key press event is triggred";
+        })
+    </script>
+</body>
+</html>

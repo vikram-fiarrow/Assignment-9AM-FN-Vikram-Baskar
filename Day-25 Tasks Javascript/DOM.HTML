@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+ <!-- DOM- Document Object Model it is a programming interface for web documents. It represents the page so that programs
+    can change the document structure, style, and content. The DOM represents the document as nodes and objects; that
+    way, programming languages can interact with the page.
+
+    It is tree structure where each node is an object representing a part of the document. -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM</title>
+</head>
+<body>
+   <h2 id="title">Hello, DOM!</h2> 
+   <!-- - For id we use getElementById -->
+
+   <p class="msg">Welcome to Javascript</p> <!-- - For class we need to use querySelector -->
+
+   <p id="box">This is a box</p>
+
+   <ul id="list"></ul>
+   <p id="removeMe">Remove this para</p>
+
+   <script>
+    const heading = document.getElementById('title');
+    const para = document.querySelector('.msg');
+    const ar = heading.textContent = "Upload the file"; // To change the text content of the heading
+    const box = document.getElementById('box');
+    const ul = document.getElementById('list');
+    const li = document.createElement('li'); // To create a new list item
+    
+    
+    
+    // changing style and color of paragraph
+    para.style.color = "blue"; // To change the style of the paragraph
+    heading.innerHTML = `<em> ${ar} </em>`; // To change the inner HTML of the heading
+
+    // change the box color 
+    box.style.color = "red";
+    box.style.backgroundColor = "yellow";
+    box.style.padding = "20px";
+
+
+    li.textContent = "This is a new list item"; // To set the text content of the list item
+    ul.appendChild(li); // To add the list item to the unordered list
+
+    document.getElementById('removeMe').remove(); // To remove the paragraph with id 'removeMe'
+
+
+
+    
+
+    
+   </script>
+</body>
+
+</html>

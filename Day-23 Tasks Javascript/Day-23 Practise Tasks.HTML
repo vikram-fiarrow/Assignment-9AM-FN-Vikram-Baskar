@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Day 23 - Practice Tasks</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f5f5f5; }
+        h2 { background: #222; color: white; padding: 10px; }
+        .box { background: white; padding: 15px; margin: 15px 0; border-radius: 10px; }
+        button { padding: 10px; width: 100%; margin-top: 10px; background: #333; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: black; }
+    </style>
+</head>
+<body>
+
+    <h2>Day 23 - Practice Tasks</h2>
+
+    <!-- Book Object Task -->
+    <div class="box">
+        <h3>1. Book Object + getInfo()</h3>
+        <button onclick="showBookInfo()">Show Book Details</button>
+        <p id="bookOutput"></p>
+    </div>
+
+    <!-- Destructuring -->
+    <div class="box">
+        <h3>2. Destructure title & author</h3>
+        <button onclick="showDestructure()">Show Destructured Values</button>
+        <p id="destructOutput"></p>
+    </div>
+
+    <!-- Mobile Class Task -->
+    <div class="box">
+        <h3>3. Mobile Class + discount()</h3>
+        <button onclick="applyDiscount()">Apply 10% Discount</button>
+        <p id="mobileOutput"></p>
+    </div>
+
+
+<script>
+
+  
+    //    1. Book Object + getInfo() method
+
+    const book = {
+        title: "The Alchemist",
+        author: "Paulo Coelho",
+        year: 1988,
+
+        getInfo() {
+            return `Title: ${this.title}, Author: ${this.author}, Year: ${this.year}`;
+        }
+    };
+
+    function showBookInfo() {
+        document.getElementById("bookOutput").innerText = book.getInfo();
+    }
+
+
+    
+    //    2. Destructuring Object
+
+    function showDestructure() {
+        const { title, author } = book;  // destructuring
+        document.getElementById("destructOutput").innerText =
+            `Title: ${title}, Author: ${author}`;
+    }
+
+
+  
+    //    3. Mobile Class + discount() method
+ 
+    class Mobile {
+        constructor(brand, price) {
+            this.brand = brand;
+            this.price = price;
+        }
+
+        discount() {
+            this.price = this.price - (this.price * 0.10); // reduce by 10%
+            return this.price;
+        }
+    }
+
+    // Create mobile object
+    const myPhone = new Mobile("Samsung", 20000);
+
+    function applyDiscount() {
+        const newPrice = myPhone.discount();
+        document.getElementById("mobileOutput").innerText =
+            `Brand: ${myPhone.brand}, Discounted Price: ₹${newPrice}`;
+    }
+
+</script>
+
+</body>
+</html>

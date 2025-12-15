@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Day 22 - Practical Tasks</title>
+</head>
+<body>
+
+    <h2>Day 22 - Mini Projects (Functions)</h2>
+
+    <h3>1. Calculator Functions</h3>
+    <script>
+        function add(a, b) {
+            return a + b;
+        }
+
+        function subtract(a, b) {
+            return a - b;
+        }
+
+        function multiply(a, b) {
+            return a * b;
+        }
+
+        function divide(a, b) {
+            return b !== 0 ? a / b : "Cannot divide by zero";
+        }
+
+        console.log("Add:", add(5, 3));
+        console.log("Subtract:", subtract(10, 4));
+        console.log("Multiply:", multiply(6, 2));
+        console.log("Divide:", divide(20, 5));
+    </script>
+
+    <hr>
+
+    <h3>2. Greeting Program</h3>
+    <script>
+        function greet(name) {
+            return "Welcome, " + name + "!";
+        }
+
+        console.log(greet("Vikram"));
+    </script>
+
+    <hr>
+
+    <h3>3. Grade Checker</h3>
+    <script>
+        function checkGrade(marks) {
+            if (marks >= 90) return "A";
+            else if (marks >= 80) return "B";
+            else if (marks >= 70) return "C";
+            else if (marks >= 60) return "D";
+            else return "F";
+        }
+
+        console.log("Grade:", checkGrade(85));
+    </script>
+
+    <hr>
+
+    <h3>4. Area of Rectangle</h3>
+    <script>
+        function areaRectangle(length, width) {
+            return length * width;
+        }
+
+        console.log("Area:", areaRectangle(5, 3));
+    </script>
+
+    <hr>
+
+    <h3>5. Login Function</h3>
+    <script>
+        function login(username, password) {
+            const correctUser = "admin";
+            const correctPass = "1234";
+
+            if (username === correctUser && password === correctPass) {
+                return "Login Successful";
+            } else {
+                return "Try Again";
+            }
+        }
+
+        console.log( login("admin", "1234") );
+        console.log( login("wrong", "pass") );
+    </script>
+
+</body>
+</html>

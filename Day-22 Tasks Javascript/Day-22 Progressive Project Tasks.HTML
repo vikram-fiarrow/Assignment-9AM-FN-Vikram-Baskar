@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Day 22 - Functions Project</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 30px;
+            max-width: 600px;
+            margin: auto;
+            background: #f5f5f5;
+        }
+        h2 {
+            background: #222;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .box {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px 0;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #aaa;
+        }
+        button {
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #000;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Greeting Section -->
+    <h2>Welcome Message Function</h2>
+    <div class="box">
+        <input type="text" id="username" placeholder="Enter your name">
+        <button onclick="greetUser()">Greet Me</button>
+        <p id="greetOutput"></p>
+    </div>
+
+    <!-- Calculator Section -->
+    <h2>Calculator (Add, Subtract, Multiply, Divide)</h2>
+    <div class="box">
+        <input type="number" id="num1" placeholder="Enter number 1">
+        <input type="number" id="num2" placeholder="Enter number 2">
+
+        <button onclick="showAdd()">Add</button>
+        <button onclick="showSubtract()">Subtract</button>
+        <button onclick="showMultiply()">Multiply</button>
+        <button onclick="showDivide()">Divide</button>
+
+        <p id="calcOutput"></p>
+    </div>
+
+    <!-- Array Printer Section -->
+    <h2>Array Printing Function</h2>
+    <div class="box">
+        <button onclick="showFruits()">Print Fruits</button>
+        <p id="arrayOutput"></p>
+    </div>
+
+    <script>
+      
+        //    REUSABLE HELPER FUNCTIONS 
+     
+
+        // Greet arrow function
+        const greet = (name) => `Welcome, ${name}!`;
+
+        // Calculator arrow functions
+        const add = (a, b) => a + b;
+        const subtract = (a, b) => a - b;
+        const multiply = (a, b) => a * b;
+        const divide = (a, b) => b !== 0 ? a / b : "Cannot divide by zero";
+
+        // Array printing arrow function
+        const printArray = (arr) => arr.join(", ");
+
+       
+        //    EVENT FUNCTIONS (DOM)
+      
+
+        // Greeting
+        function greetUser() {
+            const name = document.getElementById("username").value;
+            document.getElementById("greetOutput").innerText = greet(name);
+        }
+
+        // Calculator display functions
+        function showAdd() {
+            let a = Number(document.getElementById("num1").value);
+            let b = Number(document.getElementById("num2").value);
+            document.getElementById("calcOutput").innerText = 
+                "Result: " + add(a, b);
+        }
+
+        function showSubtract() {
+            let a = Number(document.getElementById("num1").value);
+            let b = Number(document.getElementById("num2").value);
+            document.getElementById("calcOutput").innerText = 
+                "Result: " + subtract(a, b);
+        }
+
+        function showMultiply() {
+            let a = Number(document.getElementById("num1").value);
+            let b = Number(document.getElementById("num2").value);
+            document.getElementById("calcOutput").innerText = 
+                "Result: " + multiply(a, b);
+        }
+
+        function showDivide() {
+            let a = Number(document.getElementById("num1").value);
+            let b = Number(document.getElementById("num2").value);
+            document.getElementById("calcOutput").innerText = 
+                "Result: " + divide(a, b);
+        }
+
+        // Array printing example
+        function showFruits() {
+            const fruits = ["Apple", "Mango", "Banana", "Kiwi"];
+            document.getElementById("arrayOutput").innerText =
+                "Fruits: " + printArray(fruits);
+        }
+
+    </script>
+</body>
+</html>
