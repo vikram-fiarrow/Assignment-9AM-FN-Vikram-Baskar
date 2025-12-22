@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Day 28 Practice Tasks</title>
+</head>
+<body>
+
+  <h2>Day 28 - JavaScript Practice Tasks</h2>
+  <p>View Console for the Output</p>
+
+  <script>
+    // 1. Syntax Error (Fixed)
+    let x = 10;
+    if (x > 5) {
+      console.log("Greater than 5");
+    }
+
+    // 2. Runtime Error (Fixed)
+    let name = "Vikram";
+    console.log(name.toUpperCase());
+
+    // 3. Logical Error (Fixed)
+    let age = 17;
+    if (age >= 18) {
+      console.log("Eligible to vote");
+    } else {
+      console.log("Not eligible");
+    }
+
+    // 4. Console Error (Handled)
+    let a = 5;
+    console.log(a);
+
+    // 5. Debugging using console.log
+    function add(a, b) {
+      console.log("a:", a);
+      console.log("b:", b);
+      return a + b;
+    }
+
+    let result = add(5, 3);
+    console.log("Result:", result);
+  </script>
+
+</body>
+</html>

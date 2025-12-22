@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Day 24 Practice Tasks</title>
+</head>
+<body>
+
+  <h2>Day 24 - JavaScript Practice Tasks</h2>
+  <p>Open Console to see output (Right click → Inspect → Console <3 )</p>
+
+  <script>
+    // 1. Create an object book
+    const book = {
+      title: "The Alchemist",
+      author: "Paulo Coelho",
+      pages: 208,
+
+      describe: function () {
+        console.log(
+          `Title: ${this.title}, Author: ${this.author}, Pages: ${this.pages}`
+        );
+      }
+    };
+
+    // Call describe method
+    book.describe();
+
+    // 2. Object Destructuring
+    const { title, author } = book;
+    console.log("Book Title:", title);
+    console.log("Book Author:", author);
+
+    // 3. Employee class
+    class Employee {
+      constructor(name, salary) {
+        this.name = name;
+        this.salary = salary;
+      }
+
+      displayInfo() {
+        console.log(`Employee Name: ${this.name}, Salary: ₹${this.salary}`);
+      }
+    }
+
+    // 4. Manager class (Inheritance)
+    class Manager extends Employee {
+      constructor(name, salary, department) {
+        super(name, salary);
+        this.department = department;
+      }
+
+      displayManagerInfo() {
+        console.log(
+          `Manager Name: ${this.name}, Salary: ₹${this.salary}, Department: ${this.department}`
+        );
+      }
+    }
+
+    // Create objects
+    const emp1 = new Employee("Vikram", 30000);
+    emp1.displayInfo();
+
+    const mgr1 = new Manager("Geetha", 60000, "HR");
+    mgr1.displayManagerInfo();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Day 27 Practice Tasks</title>
+
+  <style>
+    #hoverText {
+      font-size: 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Day 27 - JavaScript Practice Tasks</h2>
+
+  <!-- 1. Button click alert -->
+  <button id="alertBtn">Click Me</button>
+
+  <br><br> <hr>
+
+  <!-- 2. Change text color on hover -->
+  <p id="hoverText">Hover over me to see me change</p>
+
+  <br><hr>
+
+  <!-- 3. Log keyboard input -->
+  <input type="text" id="keyInput" placeholder="Type something">
+
+  <br><br><hr>
+
+  <!-- 4. Stop form reload -->
+  <form id="myForm">
+    <input type="text" placeholder="Enter name">
+    <button type="submit">Submit</button>
+  </form>
+
+  <br><hr>
+
+  <!-- 5. Display clicked element text -->
+  <button class="clickItem">Click Me</button>
+  <button class="clickItem">Touch Me</button>
+
+  <script>
+    // 1. Button click alert
+    document.getElementById("alertBtn").addEventListener("click", function () {
+      alert("Hey cutie!");
+    });
+
+    // 2. Change text color on hover
+    const hoverText = document.getElementById("hoverText");
+
+    hoverText.addEventListener("mouseover", function () {
+      hoverText.style.color = "red";
+    });
+
+    hoverText.addEventListener("mouseout", function () {
+      hoverText.style.color = "black";
+    });
+
+    // 3. Log keyboard input
+    document.getElementById("keyInput").addEventListener("keydown", function (event) {
+      console.log("Key pressed:", event.key);
+    });
+
+    // 4. Stop form reload
+    document.getElementById("myForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+      alert("Form submitted without reload");
+    });
+
+    // 5. Display clicked element text
+    const items = document.querySelectorAll(".clickItem");
+
+    items.forEach(function (item) {
+      item.addEventListener("click", function () {
+        alert("You clicked: " + item.textContent);
+      });
+    });
+  </script>
+
+</body>
+</html>

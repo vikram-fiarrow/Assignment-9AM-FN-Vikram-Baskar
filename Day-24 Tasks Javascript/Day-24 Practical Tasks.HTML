@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Day 24 Practical Tasks</title>
+</head>
+<body>
+
+  <h2>Day 24 - JavaScript Practical Tasks</h2>
+  <p>Open Console to view output</p>
+
+  <script>
+    // 1. Product class
+    class Product {
+      constructor(name, price) {
+        this.name = name;
+        this.price = price;
+      }
+
+      discountedPrice(discountPercent) {
+        return this.price - (this.price * discountPercent / 100);
+      }
+    }
+
+    const product1 = new Product("Headphones", 2000);
+    console.log("Discounted Price:", product1.discountedPrice(10));
+
+    // 2. User object with login and logout methods
+    const user = {
+      username: "vikram",
+      login: function () {
+        console.log(this.username + " logged in");
+      },
+      logout: function () {
+        console.log(this.username + " logged out");
+      }
+    };
+
+    user.login();
+    user.logout();
+
+    // 3. Student class
+    class Student {
+      constructor(name, age) {
+        this.name = name;
+        this.age = age;
+      }
+
+      display() {
+        console.log(`Name: ${this.name}, Age: ${this.age}`);
+      }
+    }
+
+    const s1 = new Student("Arun", 20);
+    const s2 = new Student("Priya", 21);
+    const s3 = new Student("Kiran", 22);
+
+    s1.display();
+    s2.display();
+    s3.display();
+
+    // 4. Shape (Base class)
+    class Shape {
+      constructor() {}
+    }
+
+    class Circle extends Shape {
+      constructor(radius) {
+        super();
+        this.radius = radius;
+      }
+
+      area() {
+        return Math.PI * this.radius * this.radius;
+      }
+    }
+
+    const circle1 = new Circle(5);
+    console.log("Circle Area:", circle1.area());
+
+    // 5. Using Prototype to add method dynamically
+    Student.prototype.sayHello = function () {
+      console.log("Hello, I am " + this.name);
+    };
+
+    s1.sayHello();
+    s2.sayHello();
+    s3.sayHello();
+  </script>
+
+</body>
+</html>

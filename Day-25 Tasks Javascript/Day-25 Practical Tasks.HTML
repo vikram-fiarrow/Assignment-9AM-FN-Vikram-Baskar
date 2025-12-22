@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Day 25 - Practical Tasks</title>
+</head>
+<body>
+
+    <h2>Day 25 - JavaScript Practical Tasks</h2>
+
+    <div id="output"></div>
+    <ul id="productList"></ul>
+
+    <script>
+        let output = document.getElementById("output");
+
+        // 1. reduce() – total of numbers
+        let numbers = [10, 20, 30, 40];
+        let total = numbers.reduce((sum, num) => sum + num, 0);
+
+        output.innerHTML += "<p><b>Total using reduce:</b> " + total + "</p>";
+
+        // 2. Students ages – find adults (>=18)
+        let ages = [12, 17, 18, 20, 25, 16];
+        let adults = ages.filter(age => age >= 18);
+
+        output.innerHTML += "<p><b>Adult Ages (≥18):</b> " + adults + "</p>";
+
+        // 3. 2D array – names and marks
+        let students = [
+            ["Rahul", 85],
+            ["Anita", 92],
+            ["Vikram", 78]
+        ];
+
+        output.innerHTML += "<p><b>Student Details:</b></p>";
+
+        students.forEach(student => {
+            output.innerHTML += student[0] + " - Marks: " + student[1] + "<br>";
+        });
+
+        // 4. Combine arrays
+        let arr1 = ["Pen", "Pencil"];
+        let arr2 = ["Eraser", "Scale"];
+
+        let combined1 = arr1.concat(arr2);
+        let combined2 = [...arr1, ...arr2];
+
+        output.innerHTML += "<p><b>Combined (concat):</b> " + combined1 + "</p>";
+        output.innerHTML += "<p><b>Combined (spread):</b> " + combined2 + "</p>";
+
+        // 5. Display products dynamically using forEach
+        let products = ["Laptop", "Mobile", "Headphones", "Charger"];
+        let productList = document.getElementById("productList");
+
+        products.forEach(product => {
+            let li = document.createElement("li");
+            li.textContent = product;
+            productList.appendChild(li);
+        });
+    </script>
+
+</body>
+</html>

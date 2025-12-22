@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Day 25 - Array Practice</title>
+</head>
+<body>
+
+    <h2>Day 25 - JavaScript Array Practice</h2>
+
+    <pre id="output"></pre>
+
+    <script>
+        let output = document.getElementById("output");
+
+        // 1. Array of colors
+        let colors = ["Red", "Blue", "Green", "Yellow", "Purple"];
+        output.innerText += "Colors: " + colors + "\n";
+        output.innerText += "First color: " + colors[0] + "\n";
+        output.innerText += "Last color: " + colors[colors.length - 1] + "\n\n";
+
+        // 2. push, pop, shift, unshift
+        let fruits = ["Apple", "Banana"];
+        output.innerText += "Initial fruits: " + fruits + "\n";
+
+        fruits.push("Mango");
+        output.innerText += "After push: " + fruits + "\n";
+
+        fruits.pop();
+        output.innerText += "After pop: " + fruits + "\n";
+
+        fruits.unshift("Orange");
+        output.innerText += "After unshift: " + fruits + "\n";
+
+        fruits.shift();
+        output.innerText += "After shift: " + fruits + "\n\n";
+
+        // 3. forEach
+        let numbers = [10, 25, 50, 75, 100];
+        output.innerText += "Numbers using forEach:\n";
+        numbers.forEach(num => {
+            output.innerText += num + "\n";
+        });
+
+        // 4. map (square)
+        let squaredNumbers = numbers.map(num => num * num);
+        output.innerText += "\nSquared Numbers (map): " + squaredNumbers + "\n";
+
+        // 5. filter (> 50)
+        let greaterThan50 = numbers.filter(num => num > 50);
+        output.innerText += "Numbers greater than 50 (filter): " + greaterThan50;
+    </script>
+
+</body>
+</html>

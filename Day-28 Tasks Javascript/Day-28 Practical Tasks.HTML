@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Day 28 Practical Tasks</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .section {
+      margin-bottom: 30px;
+    }
+
+    .error {
+      color: red;
+    }
+
+    .success {
+      color: green;
+    }
+
+    input, button {
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Day 28 - JavaScript Practical Tasks</h2>
+
+  <!-- 1. Error-Finding Quiz App -->
+  <div class="section">
+    <h3>Error Finding Quiz</h3>
+    <p>What is wrong in this code?</p>
+    <pre>if (x = 5)</pre>
+    <button onclick="checkQuiz()">Check Answer</button>
+    <p id="quizResult"></p>
+  </div>
+
+  <hr>
+
+  <!-- 2. Login Form with Validation Errors -->
+  <div class="section">
+    <h3>Login Form</h3>
+    <input type="text" id="loginUser" placeholder="Username"><br>
+    <input type="password" id="loginPass" placeholder="Password"><br>
+    <button onclick="login()">Login</button>
+    <p id="loginMsg"></p>
+  </div>
+
+    <hr>
+
+  <!-- 3. Calculator with Error Checks -->
+  <div class="section">
+    <h3>Calculator</h3>
+    <input type="number" id="num1" placeholder="Number 1"><br>
+    <input type="number" id="num2" placeholder="Number 2"><br>
+    <button onclick="calculate()">Add</button>
+    <p id="calcResult"></p>
+  </div>
+
+  <hr>
+
+  <!-- 4. Debug Broken JavaScript App -->
+  <div class="section">
+    <h3>Debug App</h3>
+    <button onclick="fixedFunction()">Run App</button>
+    <p id="debugResult"></p>
+  </div>
+
+  <hr>
+
+  <!-- 5. Input Validation Project -->
+  <div class="section">
+    <h3>Input Validation</h3>
+    <input type="text" id="ageInput" placeholder="Enter Age">
+    <button onclick="validateAge()">Validate</button>
+    <p id="ageMsg"></p>
+  </div>
+
+  <script>
+    // 1. Error-Finding Quiz App
+    function checkQuiz() {
+      document.getElementById("quizResult").textContent =
+        "Error: Assignment (=) used instead of comparison (== or ===)";
+    }
+
+    // 2. Login Form Validation
+    function login() {
+      const user = document.getElementById("loginUser").value;
+      const pass = document.getElementById("loginPass").value;
+      const msg = document.getElementById("loginMsg");
+
+      if (user === "" || pass === "") {
+        msg.textContent = "All fields are required";
+        msg.className = "error";
+      } else {
+        msg.textContent = "Login successful";
+        msg.className = "success";
+      }
+    }
+
+    // 3. Calculator with Error Checks
+    function calculate() {
+      const n1 = document.getElementById("num1").value;
+      const n2 = document.getElementById("num2").value;
+      const result = document.getElementById("calcResult");
+
+      if (n1 === "" || n2 === "") {
+        result.textContent = "Please enter both numbers";
+        result.className = "error";
+      } else {
+        result.textContent = "Result: " + (Number(n1) + Number(n2));
+        result.className = "success";
+      }
+    }
+
+    // 4. Debug Broken JavaScript App (Fixed)
+    function fixedFunction() {
+      let message = "App is working correctly";
+      document.getElementById("debugResult").textContent = message;
+    }
+
+    // 5. Input Validation Project
+    function validateAge() {
+      const age = document.getElementById("ageInput").value;
+      const msg = document.getElementById("ageMsg");
+
+      if (age === "" || age < 1) {
+        msg.textContent = "Please enter a valid age";
+        msg.className = "error";
+      } else {
+        msg.textContent = "Age accepted";
+        msg.className = "success";
+      }
+    }
+  </script>
+
+</body>
+</html>

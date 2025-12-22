@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Day 28 Progressive Project</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .error {
+      color: red;
+    }
+
+    .success {
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Day 28 - Progressive Project Integration</h2>
+
+  <!-- 1. Debugged DOM Project -->
+  <button id="changeTextBtn">Change Text</button>
+  <p id="textOutput">Original Text</p>
+
+  <hr>
+
+  <!-- 2. Input Validation -->
+  <h3>Email Validation</h3>
+  <input type="text" id="emailInput" placeholder="Enter email">
+  <button id="validateBtn">Validate</button>
+  <p id="emailMsg"></p>
+
+  <hr>
+
+  <!-- 3 & 4. Reliable Form -->
+  <h3>Reliable Contact Form</h3>
+  <form id="contactForm">
+    <input type="text" id="name" placeholder="Name"><br><br>
+    <input type="text" id="email" placeholder="Email"><br><br>
+    <button type="submit">Submit</button>
+  </form>
+  <p id="formMsg"></p>
+
+  <script>
+    // 1. Debug previous DOM project + handle missing elements
+    const btn = document.getElementById("changeTextBtn");
+    const output = document.getElementById("textOutput");
+
+    if (btn && output) {
+      btn.addEventListener("click", function () {
+        output.textContent = "Text Updated Successfully";
+      });
+    }
+
+    // 2. Input validation
+    document.getElementById("validateBtn").addEventListener("click", function () {
+      const email = document.getElementById("emailInput").value;
+      const msg = document.getElementById("emailMsg");
+
+      if (email === "" || !email.includes("@")) {
+        msg.textContent = "Invalid email address";
+        msg.className = "error";
+      } else {
+        msg.textContent = "Valid email";
+        msg.className = "success";
+      }
+    });
+
+    // 3, 4 & 5. Improve form reliability + try-catch error handling
+    document.getElementById("contactForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      try {
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const msg = document.getElementById("formMsg");
+
+        if (name === "" || email === "") {
+          throw new Error("All fields are required");
+        }
+
+        if (!email.includes("@")) {
+          throw new Error("Invalid email format");
+        }
+
+        msg.textContent = "Form submitted successfully";
+        msg.className = "success";
+
+      } catch (error) {
+        document.getElementById("formMsg").textContent = error.message;
+        document.getElementById("formMsg").className = "error";
+      }
+    });
+  </script>
+
+</body>
+</html>

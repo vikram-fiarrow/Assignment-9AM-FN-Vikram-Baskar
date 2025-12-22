@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Day 26 - Practical Tasks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .dark {
+            background-color: #121212;
+            color: white;
+        }
+
+        button {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Day 26 - DOM Practical Tasks</h2>
+
+    <!-- Dark Mode -->
+    <button id="darkBtn">Toggle Dark Mode</button>
+
+    <hr>
+
+    <!-- Live text update -->
+    <input type="text" id="liveInput" placeholder="Type something...">
+    <p id="liveText"></p>
+
+    <hr>
+
+    <!-- To-Do List -->
+    <h3>To-Do List</h3>
+    <input type="text" id="todoInput" placeholder="Enter task">
+    <button id="addTodo">Add Task</button>
+
+    <ul id="todoList"></ul>
+
+    <hr>
+
+    <!-- Multiple buttons with addEventListener -->
+    <h3>Change Text Color</h3>
+    <button class="colorBtn" data-color="red">Red</button>
+    <button class="colorBtn" data-color="green">Green</button>
+    <button class="colorBtn" data-color="blue">Blue</button>
+
+    <p id="colorText">Click a button to change my color</p>
+
+    <hr>
+
+    <!-- innerHTML formatted text -->
+    <button id="formatBtn">Insert Formatted Text</button>
+    <div id="formattedOutput"></div>
+
+    <script>
+        // Dark mode toggle
+        document.getElementById("darkBtn").addEventListener("click", () => {
+            document.body.classList.toggle("dark");
+        });
+
+        // Live input update
+        document.getElementById("liveInput").addEventListener("input", (e) => {
+            document.getElementById("liveText").innerText = e.target.value;
+        });
+
+        // To-Do List
+        document.getElementById("addTodo").addEventListener("click", () => {
+            let input = document.getElementById("todoInput");
+            let list = document.getElementById("todoList");
+
+            if (input.value === "") return;
+
+            let li = document.createElement("li");
+            li.textContent = input.value;
+
+            li.addEventListener("click", () => {
+                list.removeChild(li);
+            });
+
+            list.appendChild(li);
+            input.value = "";
+        });
+
+        // Multiple buttons using addEventListener
+        document.querySelectorAll(".colorBtn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                document.getElementById("colorText").style.color = btn.dataset.color;
+            });
+        });
+
+        // innerHTML formatted content
+        document.getElementById("formatBtn").addEventListener("click", () => {
+            document.getElementById("formattedOutput").innerHTML =
+                "<b>The text changed to Bold</b> and <i>Italic </i> lesson learnt!";
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Event & Payload Demo</title>
+</head>
+<body>
+
+    <h2>Form Event & Payload Demo</h2>
+
+    <form id="myform">
+        <input 
+            type="text" 
+            id="username" 
+            name="username" 
+            placeholder="Username"
+            required
+        ><br><br>
+
+        <label>Choose your city:</label>
+        <select name="city" id="city" required>
+            <option value="">Select City</option>
+            <option value="chennai">Chennai</option>
+            <option value="mumbai">Mumbai</option>
+        </select><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <p id="status"></p>
+
+    <script>
+        const form = document.getElementById("myform");
+        const userName = document.getElementById("username");
+        const city = document.getElementById("city");
+        const status = document.getElementById("status");
+
+        // --- Event Handlers ---
+
+        // focus event: Fires when the user selects or tabs into the element
+        userName.addEventListener("focus", () => {
+            status.textContent = "Username field is focused";
+        });
+
+        // blur event: Fires when the user moves focus away from the element
+        userName.addEventListener("blur", () => {
+            status.textContent = "Username field lost focus";
+        });
+
+        // change event: Fires when the value of the element is changed
+        city.addEventListener("change", () => {
+            status.textContent = "You selected: " + city.value;
+        });
+
+        // submit event: Fires when the form is submitted
+        form.addEventListener("submit", (e) => {
+            // Stop the default browser submission (which would cause a page reload)
+            e.preventDefault();
+
+            // Perform an asynchronous POST request using the Fetch API
+            fetch("https://httpbin.org/post", {
+                method: "POST", // Specifies the HTTP method
+                headers: {
+                    // Tells the server that the data being sent is JSON
+                    "Content-Type": "application/json"
+                },
+                // Converts the JavaScript object into a JSON string payload
+                body: JSON.stringify({
+                    username: userName.value,
+                    city: city.value
+                })
+            })
+            .then(response => {
+                // Check if the response was successful
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json(); // Parses the JSON response body
+            })
+            .then(data => {
+                // Display the successful submission status and the data received back
+                status.textContent = "Form submitted successfully! Check console for full response.";
+                console.log("Full Server Response Data:", data);
+            })
+            .catch(error => {
+                status.textContent = "Submission failed: " + error.message;
+                console.error("Submission error:", error);
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -165,7 +165,7 @@
 
         products.forEach(p => {
             const { name, price } = p; // destructuring
-            output += `${name} – ₹${price}\n`;
+            output += `${name} - ₹${price}\n`;
         });
 
         document.getElementById("productOutput").innerText = output;
@@ -201,7 +201,7 @@
         const sm = new StudentManager();
 
         sm.addStudent(new Student("Vikram", "A"));
-        sm.addStudent(new Student("Gabi", "B"));
+        sm.addStudent(new Student("Gabi", "B-"));
         sm.addStudent(new Student("Aor", "A+"));
 
         document.getElementById("studentOutput").innerText = sm.listStudents();

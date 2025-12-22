@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Day 26 - DOM Practice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        button {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. Change heading text -->
+    <h2 id="heading">Welcome to Day 26 Practice</h2>
+    <button onclick="changeHeading()">Change Heading</button>
+
+    <hr>
+
+    <!-- 2. Change paragraph color using querySelector -->
+    <p class="para">This paragraph color will change.</p>
+    <button onclick="changeColor()">Change Paragraph Color</button>
+
+    <hr>
+
+    <!-- 3 & 4. Add and remove list items -->
+    <h3>My List</h3>
+    <ul id="myList">
+        <li>Item 1</li>
+    </ul>
+
+    <button onclick="addItems()">Add 3 Items</button>
+    <button onclick="removeFirst()">Remove First Item</button>
+
+    <hr>
+
+    <!-- 5. Change background color -->
+    <button onclick="changeBackground()">Change Background Color</button>
+
+    <script>
+        // Change heading text
+        function changeHeading() {
+            document.getElementById("heading").innerText = "Day-26 Practice Tasks Completed!";
+        }
+
+        // querySelector to change paragraph color
+        function changeColor() {
+            document.querySelector(".para").style.color = "blue";
+        }
+
+        // Add 3 items dynamically
+        function addItems() {
+            let list = document.getElementById("myList");
+
+            for (let i = 2; i <= 4; i++) {
+                let li = document.createElement("li");
+                li.textContent = "Item " + i;
+                list.appendChild(li);
+            }
+        }
+
+        // Remove first item of list
+        function removeFirst() {
+            let list = document.getElementById("myList");
+            if (list.firstElementChild) {
+                list.removeChild(list.firstElementChild);
+            }
+        }
+
+        // Change background color
+        function changeBackground() {
+            document.body.style.backgroundColor = "lightpink";
+        }
+    </script>
+
+</body>
+</html>

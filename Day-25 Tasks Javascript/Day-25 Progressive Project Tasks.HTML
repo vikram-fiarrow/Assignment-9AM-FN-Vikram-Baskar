@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Portfolio - Day 25</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .product {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px 0;
+            width: 250px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>My Products</h2>
+
+    <div id="productContainer"></div>
+
+    <h3>Affordable Products (Price < 500)</h3>
+    <div id="filteredProducts"></div>
+
+    <h3>Total Price of All Products</h3>
+    <p id="totalPrice"></p>
+
+    <script>
+        // Array of products (real data storage)
+        let products = [
+            { name: "Notebook", price: 150 },
+            { name: "Headphones", price: 1200 },
+            { name: "Pen", price: 20 },
+            { name: "Power Bank", price: 450 },
+            { name: "Backpack", price: 900 }
+        ];
+
+        let productContainer = document.getElementById("productContainer");
+        let filteredContainer = document.getElementById("filteredProducts");
+        let totalPriceEl = document.getElementById("totalPrice");
+
+        // forEach – display all products
+        products.forEach(product => {
+            let div = document.createElement("div");
+            div.className = "product";
+            div.innerHTML = `<b>${product.name}</b><br>Price: ₹${product.price}`;
+            productContainer.appendChild(div);
+        });
+
+        // filter – price < 500
+        let affordableProducts = products.filter(p => p.price < 500);
+
+        affordableProducts.forEach(product => {
+            let div = document.createElement("div");
+            div.className = "product";
+            div.innerHTML = `<b>${product.name}</b><br>Price: ₹${product.price}`;
+            filteredContainer.appendChild(div);
+        });
+
+        // reduce – calculate total price
+        let total = products.reduce((sum, product) => sum + product.price, 0);
+        totalPriceEl.innerText = "Total Price: ₹" + total;
+    </script>
+
+</body>
+</html>

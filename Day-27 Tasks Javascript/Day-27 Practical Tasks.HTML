@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Day 27 Mini Projects</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    /* Hover Menu */
+    .menu {
+      width: 150px;
+      background: #333;
+      color: white;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .submenu {
+      display: none;
+      background: lightslategray;
+      padding: 10px;
+    }
+
+    .menu:hover .submenu {
+      display: block;
+    }
+
+    /* Click Tracker */
+    #tracker {
+      margin-top: 20px;
+      padding: 15px;
+      border: 1px solid white;
+      width: fit-content;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Day 27 - JavaScript Mini Projects</h2>
+
+  <!-- 1. Interactive Counter -->
+  <h3>Counter: <span id="count">0</span></h3>
+  <button id="incBtn">Increase</button>
+  <button id="decBtn">Decrease</button>
+
+  <hr>
+
+  <!-- 2. Hover-Based Menu -->
+  <div class="menu">
+    Menu
+    <div class="submenu">
+      <p>Home</p>
+      <p>About</p>
+      <p>Contact</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- 3. Login Form Validation -->
+  <h3>Login Form</h3>
+  <form id="loginForm">
+    <input type="text" id="username" placeholder="Username"><br><br>
+    <input type="password" id="password" placeholder="Password"><br><br>
+    <button type="submit">Login</button>
+  </form>
+
+  <p id="loginMsg"></p>
+
+  <hr>
+
+  <!-- 4. Keyboard Shortcut -->
+  <p>Press <b>Ctrl + S</b> to see shortcut alert</p>
+
+  <hr>
+
+  <!-- 5. Click Tracker App -->
+  <div id="tracker">
+    Click Me (Clicks: <span id="clickCount">0</span>)
+  </div>
+
+  <script>
+    // 1. Interactive Counter
+    let count = 0;
+    const countDisplay = document.getElementById("count");
+
+    document.getElementById("incBtn").addEventListener("click", function () {
+      count++;
+      countDisplay.textContent = count;
+    });
+
+    document.getElementById("decBtn").addEventListener("click", function () {
+      count--;
+      countDisplay.textContent = count;
+    });
+
+    // 3. Login Form Validation
+    document.getElementById("loginForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const user = document.getElementById("username").value;
+      const pass = document.getElementById("password").value;
+      const msg = document.getElementById("loginMsg");
+
+      if (user === "" || pass === "") {
+        msg.textContent = "Please fill all fields";
+        msg.style.color = "red";
+      } else {
+        msg.textContent = "Login Successful";
+        msg.style.color = "green";
+      }
+    });
+
+    // 4. Keyboard Shortcut (Ctrl + S)
+    document.addEventListener("keydown", function (event) {
+      if (event.ctrlKey && event.key === "s") {
+        event.preventDefault();
+        alert("You have clicked her to see the shortcut!");
+      }
+    });
+
+    // 5. Click Tracker App
+    let clicks = 0;
+    document.getElementById("tracker").addEventListener("click", function () {
+      clicks++;
+      document.getElementById("clickCount").textContent = clicks;
+    });
+  </script>
+
+</body>
+</html>
